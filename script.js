@@ -114,7 +114,7 @@ function addHabit(e) {
   e.preventDefault();
   const habitInput = document.getElementById("habit-input");
   const habitName = habitInput.value.trim();
-  if (!habitName) return;
+  if (!habitName) return alert("Enter A Name first");
   const newHabit = {
     id: crypto.randomUUID(),
     name: habitName,
