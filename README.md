@@ -1,7 +1,7 @@
 # Atomic Habitizer
 
 ## Features
-- You can add habits
+- You can add habits (Before clicking Add Habit type the name of the habit in the text box there)
 - Remove them
 - Toggle habits state according to completing it
 - Automatically calculates first and last date of a week *(this was hard)*
