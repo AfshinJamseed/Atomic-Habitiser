@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "- You can add habits (Before clicking Add Habit type the name of the habit in the text box there)\r - Remove them\r - Toggle habits state according to completing it\r - Automatically calculates first and last date of a week *(this was hard)*\r - Automatically calculates how many habits are done today and how many are pending\r - Glowing effects for add button\r - Custom hover effects",
   "main": "script.js",
+  "homepage": "https://raw.githubusercontent.com/AfshinJamseed/Slap-Bot/refs/heads/main/README.md",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "gh-pages -d dist"
