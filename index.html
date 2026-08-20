@@ -4,76 +4,160 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Atomic Habitizer</title>
-    <link rel="stylesheet" href="./style.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+      integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <body class="p-6 bg-zinc-950 text-zinc-100 min-h-screen max-w-4xl mx-auto cursor-default select-none">
-    <header class="bg-zinc-700 mb-8">
-      <section
-        class="top mb-3 p-4 rounded flex justify-between items-center bg-zinc-700"
-      >
-        <div class="t-left">
-          <h1
-            class="text-2xl font-bold tracking-tight rounded p-1 bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent"
-          >
-            Habit Tracker
-          </h1>
-          <p class="text-sm text-blue-300 mt-1 font-medium ml-1">
-            <span
-              class="text-green-400 bg-zinc-900 py-0.25 px-1 rounded-xl"
-              id="completed-count"
-              >3</span
-            >
-            /
-            <span
-              class="text-green-400 bg-zinc-900 py-0.25 px-1 rounded-xl"
-              id="total-count"
-              >5</span
-            >
-            done today
-          </p>
+  <body>
+    <!-- Side bar -->
+    <div class="dashboard-container">
+      <!-- Top section -->
+      <header class="top-section">
+        <div class="heading">
+          <span class="A">Atomic</span><span class="H">Habitizer</span>
+        </div>
+        <div class="middle">
+          <h2 class="sub-title">Habit Streaks &<br />Performance</h2>
+          <div class="widgets-container">
+            <div class="ring-container">
+              <svg width="76" height="76" viewBox="0 0 76 76">
+                <circle class="ring-track" cx="38" cy="38" r="32"></circle>
+                <circle
+                  id="progress-ring-fill"
+                  class="ring-fill"
+                  cx="38"
+                  cy="38"
+                  r="33"
+                  style="stroke-dasharray: 201.06; stroke-dashoffset: 86.45"
+                ></circle>
+              </svg>
+              <div class="ring-label">
+                <span class="percentage">62%</span>
+                <span>done</span>
+              </div>
+            </div>
+
+            <div class="max-streak-widget">
+              <span class="widget-title">Current Max Streak</span>
+              <div class="streak-badge">
+                <i class="fa-solid fa-fire-flame-curved flame-icon"></i> 5 days
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="t-right flex flex-col items-end gap-2">
-          <p
-            class="text-sm font-semibold upp ercase tracking-wider text-zinc-400 bg-zinc-800 px-2.5 py-1 rounded-md"
-            id="current-week"
+        <div class="bottom stats-grid">
+          <div class="stats-item">
+            <p>Total habits</p>
+            <span class="count">3</span>
+          </div>
+          <div class="stats-item">
+            <p>Current Week</p>
+            <div class="week-dates"></div>
+          </div>
+          <div class="stats-item">
+            <p>Pending Today</p>
+            <span class="count">28%</span>
+          </div>
+        </div>
+      </header>
+    </div>
+    <!-- Habits section -->
+    <main class="habits-deck">
+      <div class="habit-row-card">
+        <div class="card-header-row">
+          <div class="habit-meta">
+            <!-- Left Side Accent Indicator -->
+            <div class="accent-bar fitness-bg"></div>
+            <div>
+              <p>Hydrate 3L Water</p>
+              <span class="category-tag">Fitness</span>
+            </div>
+          </div>
+          <div class="streak-pill">⚡ 3d streak</div>
+        </div>
+
+        <!-- Horizontal Weekly Checkers -->
+        <div class="week-strip">
+          <button class="day-node active-completed">
+            <span class="day-name">Mon <span class="date-box">- 12</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node active-completed">
+            <span class="day-name">Tue <span class="date-box">- 13</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node active-completed">
+            <span class="day-name">Wed <span class="date-box">- 14</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Thu <span class="date-box">- 15</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Fri <span class="date-box">- 16</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Sat <span class="date-box">- 17</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Sun <span class="date-box">- 18</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+        </div>
+      </div>
+    </main>
+    <section class="input-section">
+      <div class="add-habit-modal">
+        <div class="form-section preset-section">
+          <div class="section-label fitness-clr">Quick Presets</div>
+          <div class="preset-row">
+            <button class="preset-btn preset-btn-mind">
+              <span class="preset-dot mind-bg"></span> Morning Meditation
+            </button>
+            <button class="preset-btn preset-btn-fitness">
+              <span class="preset-dot fitness-bg"></span> Daily Workout
+            </button>
+            <button class="preset-btn preset-btn-productivity">
+              <span class="preset-dot productivity-bg"></span> 30min Deep work
+            </button>
+          </div>
+        </div>
+
+        <!-- Input section -->
+        <div class="form-section">
+          <label for="habit-name-field" class="section-label habit-name mind-clr"
+            >Habit Name</label
           >
-            Date-Date
-          </p>
-
-      </section>
-
-      <section class="middle mb-3">
-        <form
-          class="input-group flex gap-2 w-full bg-zinc-700 rounded border border-zinc-500 transition-all duration-300 focus-within:border-emerald-500"
-          id="habit-form"
-        >
           <input
             type="text"
-            placeholder="Name of Your New Habit"
-            class="focus:outline-none grow bg-rtransparent px-2 text-blue-400 placeholder-zinc-300 text-sm"
-            id="habit-input"
+            id="habit-name-field"
+            class="habit-input-text"
+            placeholder="e.g. Code for 30 mins"
+            autocomplete="off"
           />
-          <button
-            type="submit"
-            class="add-button bg:after-black-950 font-semibold"
-            id="submit-btn"
-          >
-            Add Habit
-          </button>
-        </form>
-      </section>
-    </header>
+        </div>
 
-    <main class="space-y-4" id="habits-container"></main>
+        <div class="form-section">
+          <label class="section-label productivity-clr">Category</label>
+          <div class="category-tabs">
+            <button type="button" class="tab-item active">Fitness</button>
+            <button type="button" class="tab-item">Mind</button>
+            <button type="button" class="tab-item">Productivity</button>
+          </div>
+        </div>
+
+        <div class="btn-submit-habit" id="btn-submit">Add Habit Tracker</div>
+      </div>
+    </section>
     <script src="./script.js"></script>
   </body>
 </html>
