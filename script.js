@@ -1,9 +1,20 @@
 const week = document.getElementById("current-week");
-const habitContainer = document.getElementById("habits-container");
+// const habitContainer = document.getElementById("habits-container");
 const habitForm = document.getElementById("habit-form");
-const completedCount = document.getElementById("completed-count");
-const totalCount = document.getElementById("total-count");
-let habits = JSON.parse(localStorage.getItem("atomic-habits")) || [];
+const completedCount = document.getElementById("remaining-count");
+// let habits = JSON.parse(localStorage.getItem("atomic-habits")) || [
+//   {name: 'No habits added. Explore the app',}
+// ];
+
+let habits = [
+  {
+    id: crypto.randomUUID(),
+    name: "hi",
+    streak: 0,
+    history: {},
+    category: 'fitness'
+  },
+];
 
 const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, "0");
@@ -44,7 +55,7 @@ function weekTracker() {
       isoDate: formatToISO(nextDate),
     });
   }
-  week.innerHTML = `${formatDate(firstDay)} - ${formatDate(lastDay)}`;
+  week.innerHTML = `${formatDate(firstDay)} -- ${formatDate(lastDay)}`;
   return dayDates;
 }
 
@@ -53,35 +64,56 @@ function renderHabitCard() {
   habitContainer.innerHTML = "";
   const dayDates = weekTracker();
   habits.forEach((habit) => {
-    const article = document.createElement("article");
-    article.className =
-      "-translate-y-2 mb-5 p-4 rounded-xl border border-zinc-500 bg-zinc-700 shadow-lg shadow-zinc-50 hover:shadow-none hover:translate-y-0 transition-all duration-300";
-    article.innerHTML = `
-          <div
-            class="top flex justify-between w-full bg-zinc-700 items-center mb-4"
-          >
-            <h1 class="text-lg font-bold text-zinc-100 flex items-center gap-2">
-              ${habit.name}<span
-                class="text-sm font-bold bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/50 cursor-pointer"
-                >${habit.streak} 🔥</span
-              >
-            </h1>
-  
-            <button
-              class="text-sm font-semibold text-rose-500/80 hover:text-rose-400 transition-colors cursor-pointer"
-            >
-              <a onclick="removeHabit('${habit.id}')">Delete 🗑</a>
-            </button>
+    let html = `
+    <div class="habit-row-card">
+        <div class="card-header-row">
+          <div class="habit-meta">
+            <!-- Left Side Accent Indicator -->
+            <div class="accent-bar fitness-bg"></div>
+            <div>
+              <p>${habit.name}</p>
+              <span class="category-tag">${habit.category}</span>
+            </div>
           </div>
-  
-          <div class="grid grid-cols-7 gap-2" id="day-grid">
-            <!-- Dynamic -->
-          </div>
-        `;
-    const gridContainer = article.querySelector("#day-grid");
+          <div class="streak-pill">⚡ ${habit.streak}d streak</div>
+        </div>
+
+        <!-- Horizontal Weekly Checkers -->
+        <div class="week-strip">
+          <button class="day-node active-completed">
+            <span class="day-name">Mon <span class="date-box">- 12</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node active-completed">
+            <span class="day-name">Tue <span class="date-box">- 13</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node active-completed">
+            <span class="day-name">Wed <span class="date-box">- 14</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Thu <span class="date-box">- 15</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Fri <span class="date-box">- 16</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Sat <span class="date-box">- 17</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+          <button class="day-node">
+            <span class="day-name">Sun <span class="date-box">- 18</span></span>
+            <span class="dot-indicator"></span>
+          </button>
+        </div>
+      </div>
+    `;
 
     dayDates.forEach((day) => {
-      const isCompleted = habit.history[day.isoDate] === true;
+      const isCompleted = habit.history[day.isoDate] === true || "";
       let buttonClass = "";
       const upcommingDay = day.isoDate > formatToISO(new Date());
       let disabled = "";
@@ -96,17 +128,7 @@ function renderHabitCard() {
         buttonClass =
           "flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-800 border border-zinc-600 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200";
       }
-      gridContainer.innerHTML += `
-      <button class="${buttonClass}"
-      onclick="addToHistory('${habit.id}','${day.isoDate}')" ${disabled}>
-            <span
-              class="text-[11px] font-bold opacity-80 uppercase tracking-wider"
-              >${day.dayName}</span>
-          <span class="text-sm font-extrabold mt-0.5">${day.dateNum}</span>
-      </button>
-    `;
     });
-    habitContainer.appendChild(article);
   });
 }
 
@@ -152,13 +174,14 @@ function calculateDoneToday() {
   let doneToday = 0;
   const isoDate = formatToISO(today);
   habits.forEach((habit) => {
-    if (habit.history[isoDate] === true) {
-      doneToday += 1;
+    if (habit.history) {
+      if (habit.history[isoDate] === true) {
+        doneToday += 1;
+      }
     }
   });
   console.log(doneToday);
   completedCount.innerHTML = doneToday;
-  totalCount.innerHTML = habits.length;
 }
 localStorage.setItem("atomic-habits", JSON.stringify(habits));
 habitForm.addEventListener("submit", addHabit);

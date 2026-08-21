@@ -58,106 +58,129 @@
           </div>
           <div class="stats-item">
             <p>Current Week</p>
-            <div class="week-dates"></div>
+            <div class="current-week" id="current-week">...</div>
           </div>
           <div class="stats-item">
             <p>Pending Today</p>
-            <span class="count">28%</span>
+            <span class="count" id="remaining-count">1</span>
           </div>
         </div>
       </header>
-    </div>
-    <!-- Habits section -->
-    <main class="habits-deck">
-      <div class="habit-row-card">
-        <div class="card-header-row">
-          <div class="habit-meta">
-            <!-- Left Side Accent Indicator -->
-            <div class="accent-bar fitness-bg"></div>
-            <div>
-              <p>Hydrate 3L Water</p>
-              <span class="category-tag">Fitness</span>
+      <!-- Habits section -->
+      <main class="habits-deck" id="habits-container">
+        <div class="habit-row-card fitness">
+          <div class="card-header-row">
+            <div class="habit-meta">
+              <!-- Left Side Accent Indicator -->
+              <div class="accent-bar"></div>
+              <div>
+                <p>Hydrate 3L Water</p>
+                <span class="category-tag">Fitness</span>
+              </div>
+              <div class="streak-pill">⚡3</div>
+            </div>
+            <i
+              id="delete-habit"
+              class="fa-regular fa-trash-can delete-habit"
+            ></i>
+          </div>
+
+          <!-- Horizontal Weekly Checkers -->
+          <div class="week-strip">
+            <button class="day-node active-completed">
+              <span class="day-name"
+                >Mon <span class="date-box">- 12</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+            <button class="day-node active-completed">
+              <span class="day-name"
+                >Tue <span class="date-box">- 13</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+            <button class="day-node active-completed">
+              <span class="day-name"
+                >Wed <span class="date-box">- 14</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+            <button class="day-node">
+              <span class="day-name"
+                >Thu <span class="date-box">- 15</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+            <button class="day-node">
+              <span class="day-name"
+                >Fri <span class="date-box">- 16</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+            <button class="day-node">
+              <span class="day-name"
+                >Sat <span class="date-box">- 17</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+            <button class="day-node">
+              <span class="day-name"
+                >Sun <span class="date-box">- 18</span></span
+              >
+              <span class="dot-indicator"></span>
+            </button>
+          </div>
+        </div>
+      </main>
+      <section class="input-section">
+        <div class="add-habit-modal">
+          <div class="form-section preset-section">
+            <div class="section-label productivity-clr">Quick Presets</div>
+            <div class="preset-row">
+              <button class="preset-btn preset-btn-mind">
+                <span class="preset-dot mind-bg"></span> Morning Meditation
+              </button>
+              <button class="preset-btn preset-btn-fitness">
+                <span class="preset-dot fitness-bg"></span> Daily Workout
+              </button>
+              <button class="preset-btn preset-btn-productivity">
+                <span class="preset-dot productivity-bg"></span> 30min Deep work
+              </button>
             </div>
           </div>
-          <div class="streak-pill">⚡ 3d streak</div>
-        </div>
 
-        <!-- Horizontal Weekly Checkers -->
-        <div class="week-strip">
-          <button class="day-node active-completed">
-            <span class="day-name">Mon <span class="date-box">- 12</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-          <button class="day-node active-completed">
-            <span class="day-name">Tue <span class="date-box">- 13</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-          <button class="day-node active-completed">
-            <span class="day-name">Wed <span class="date-box">- 14</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-          <button class="day-node">
-            <span class="day-name">Thu <span class="date-box">- 15</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-          <button class="day-node">
-            <span class="day-name">Fri <span class="date-box">- 16</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-          <button class="day-node">
-            <span class="day-name">Sat <span class="date-box">- 17</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-          <button class="day-node">
-            <span class="day-name">Sun <span class="date-box">- 18</span></span>
-            <span class="dot-indicator"></span>
-          </button>
-        </div>
-      </div>
-    </main>
-    <section class="input-section">
-      <div class="add-habit-modal">
-        <div class="form-section preset-section">
-          <div class="section-label fitness-clr">Quick Presets</div>
-          <div class="preset-row">
-            <button class="preset-btn preset-btn-mind">
-              <span class="preset-dot mind-bg"></span> Morning Meditation
-            </button>
-            <button class="preset-btn preset-btn-fitness">
-              <span class="preset-dot fitness-bg"></span> Daily Workout
-            </button>
-            <button class="preset-btn preset-btn-productivity">
-              <span class="preset-dot productivity-bg"></span> 30min Deep work
-            </button>
+          <!-- Input section -->
+          <form class="form-section" id="habit-form">
+            <label
+              for="habit-name-field"
+              class="section-label habit-name mind-clr"
+              >Habit Name</label
+            >
+            <input
+              type="text"
+              id="habit-input"
+              class="habit-input-text"
+              placeholder="e.g. Code for 30 mins"
+              autocomplete="off"
+            />
+          </form>
+
+          <div class="form-section">
+            <label class="section-label fitness-clr">Category</label>
+            <div class="category-tabs">
+              <button type="button" class="tab-item active">Fitness</button>
+              <button type="button" class="tab-item">Mind</button>
+              <button type="button" class="tab-item">Productivity</button>
+            </div>
+          </div>
+          <div role="button" class="btn-submit-habit">
+              Add Habit Tracker
+              <div class="decor-line"></div>
           </div>
         </div>
+      </section>
+    </div>
 
-        <!-- Input section -->
-        <div class="form-section">
-          <label for="habit-name-field" class="section-label habit-name mind-clr"
-            >Habit Name</label
-          >
-          <input
-            type="text"
-            id="habit-name-field"
-            class="habit-input-text"
-            placeholder="e.g. Code for 30 mins"
-            autocomplete="off"
-          />
-        </div>
-
-        <div class="form-section">
-          <label class="section-label productivity-clr">Category</label>
-          <div class="category-tabs">
-            <button type="button" class="tab-item active">Fitness</button>
-            <button type="button" class="tab-item">Mind</button>
-            <button type="button" class="tab-item">Productivity</button>
-          </div>
-        </div>
-
-        <div class="btn-submit-habit" id="btn-submit">Add Habit Tracker</div>
-      </div>
-    </section>
     <script src="./script.js"></script>
   </body>
 </html>
