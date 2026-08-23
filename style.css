@@ -386,25 +386,26 @@ circle {
   transition: all 0.15s ease;
 }
 .day-node.upcomming {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s ease;
-}
-.day-node.upcomming:hover {
-  border-left: none;
+  border: none;
 }
 .day-node.upcomming:hover .fas.upcomming {
   transform: scale(1.05);
 }
 .day-node.today-node {
   border-color: var(--text-muted);
-  filter: drop-shadow(0 0 5px var(--accent-danger));
 }
-.fitness .day-node.today-node:hover,.fitness .day-node.active-today {
+.fitness .day-node.active-today {
   filter: drop-shadow(0 0 5px var(--accent-fitness));
 }
-.mind .day-node.today-node:hover,.mind .day-node.active-today {
+
+.mind .day-node.active-today {
   filter: drop-shadow(0 0 5px var(--accent-mind));
 }
-.productivity .day-node.today-node:hover,.productivity .day-node.active-today {
+.productivity .day-node.active-today {
   filter: drop-shadow(0 0 5px var(--accent-productivity));
 }
 .day-name {
@@ -454,7 +455,10 @@ circle {
 }
 /* Common case */
 .day-node:hover {
-  transform: translate();
+  transform: translateX(-1px);
+}
+.day-node.upcomming:hover {
+  border-left: none;
 }
 /* Bottom Layer */
 .add-habit-modal {

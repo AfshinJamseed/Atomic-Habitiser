@@ -45,7 +45,7 @@
 
             <div class="max-streak-widget">
               <span class="widget-title">Current Max Streak</span>
-              <div class="streak-badge">
+              <div class="streak-badge" id="max-streak">
                 <i class="fa-solid fa-fire-flame-curved flame-icon"></i> 5 days
               </div>
             </div>
@@ -54,12 +54,12 @@
 
         <div class="bottom stats-grid">
           <div class="stats-item">
-            <p>Total habits</p>
-            <span class="count">3</span>
-          </div>
-          <div class="stats-item">
             <p>Current Week</p>
             <div class="current-week" id="current-week">...</div>
+          </div>
+          <div class="stats-item" id="total-habits">
+            <p>Total habits</p>
+            <span class="count">3</span>
           </div>
           <div class="stats-item">
             <p>Pending Today</p>
@@ -145,14 +145,27 @@
           <div class="form-section preset-section">
             <div class="section-label productivity-clr">Quick Presets</div>
             <div class="preset-row">
-              <button class="preset-btn preset-btn-mind" data-category="Mind" data-name="Morning Meditation">
+              <button
+                class="preset-btn preset-btn-mind"
+                data-category="Mind"
+                data-name="Morning Meditation"
+              >
                 <span class="preset-dot mind-bg"></span> Morning Meditation
               </button>
-              <button class="preset-btn preset-btn-fitness" data-category="Fitness" data-name="Daily Workout">
+              <button
+                class="preset-btn preset-btn-fitness"
+                data-category="Fitness"
+                data-name="Daily Workout"
+              >
                 <span class="preset-dot fitness-bg"></span> Daily Workout
               </button>
-              <button class="preset-btn preset-btn-productivity" data-category="Productivity" data-name="30 min Deep work">
-                <span class="preset-dot productivity-bg"></span> 30 min Deep work
+              <button
+                class="preset-btn preset-btn-productivity"
+                data-category="Productivity"
+                data-name="30 min Deep work"
+              >
+                <span class="preset-dot productivity-bg"></span> 30 min Deep
+                work
               </button>
             </div>
           </div>

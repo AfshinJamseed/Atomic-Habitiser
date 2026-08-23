@@ -7,14 +7,16 @@ let habits = JSON.parse(localStorage.getItem("atomic-habits")) || [
     category: "Productivity",
   },
 ];
-const today = new Date();
+let today = new Date();
 let selectedCategory = "Fitness";
+today = new Date("2025-05-15T00:00:00");
 
 const week = document.getElementById("current-week");
 const habitContainer = document.getElementById("habits-container");
-const completedCount = document.getElementById("remaining-count");
+const remeiningCountElem = document.getElementById("remaining-count");
 const habitSubmitBtn = document.getElementById("habit-submit-btn");
 const habitForm = document.getElementById("habit-form");
+const totalHabitsElem = document.querySelector("#total-habits .count");
 
 const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, "0");
@@ -57,38 +59,125 @@ function weekTracker() {
   week.innerHTML = `${formatDate(firstDay)} -- ${formatDate(lastDay)}`;
   return dayDates;
 }
+function addToHistory(habitId, isoDate) {
+  const todayISO = formatToISO(today);
+  let habit = habits.find((habit) => {
+    return habit.id === habitId || String(habit.id) === String(habitId);
+  });
+  if (isoDate > todayISO) {
+    return;
+  }
+  if (habit.history[isoDate] === true) {
+    habit.history[isoDate] = false;
+  } else {
+    habit.history[isoDate] = true;
+  }
+  const newStreak = calculateStreak(habit);
+  habit.streak = newStreak;
+  saveAndRefresh();
+}
 
+function calculateDoneToday() {
+  let doneToday = 0;
+  const isoDate = formatToISO(today);
+  habits.forEach((habit) => {
+    if (habit.history) {
+      if (habit.history[isoDate] === true) {
+        doneToday += 1;
+      }
+    }
+  });
+  console.log(doneToday);
+  remeiningCountElem.innerHTML = habits.length - doneToday;
+  return doneToday;
+}
+function calculateStreak(habit) {
+  let streak = 0;
+  const date = new Date(today);
+  date.setHours(0, 0, 0, 0);
+  const todayISO = formatToISO(today);
+
+  if (habit.history[todayISO] !== true) {
+    date.setDate(date.getDate() - 1);
+  }
+
+  while (true) {
+    const isoDate = formatToISO(date);
+
+    if (habit.history[isoDate] !== true) {
+      break;
+    }
+    streak++;
+    date.setDate(date.getDate() - 1);
+  }
+  return streak;
+}
+
+function calculateMaxStreak() {
+  let maxStreak = 0;
+  habits.forEach((habit) => {
+    const streaks = habit.streak;
+    if (streaks > maxStreak) {
+      maxStreak = streaks;
+    }
+    document.getElementById("max-streak").innerHTML =
+      `<i class="fa-solid fa-fire-flame-curved flame-icon"></i> ${maxStreak} days`;
+  });
+}
+function updateProgressRing() {
+  const ring = document.getElementById("progress-ring-fill");
+  const precentageText = document.querySelector(".percentage");
+
+  if (!ring || !precentageText) return;
+
+  const totalHabits = habits.length;
+
+  if (totalHabits === 0) {
+    precentageText.textContent = "0%";
+    ring.style.strokeDasharray = "207.35";
+    ring.style.strokeDashoffset = "207.35";
+    return;
+  }
+
+  const todayISO = formatToISO(today);
+  const completedToday = calculateDoneToday();
+
+  const percentage = Math.round((completedToday / totalHabits) * 100);
+  const circumference = 2 * Math.PI * 33;
+  const offset = circumference - (percentage / 100) * circumference;
+
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = offset;
+
+  precentageText.textContent = `${percentage}%`
+}
 function renderHabitCard() {
   habitContainer.innerHTML = "";
   const dayDates = weekTracker();
-
+  totalHabitsElem.innerText = habits.length;
   habits.forEach((habit) => {
     const dayNodesHtml = dayDates
       .map((day) => {
         const isCompleted = habit.history[day.isoDate] === true || "";
-        const upcommingDay = day.isoDate > formatToISO(new Date());
+        const upcommingDay = day.isoDate > formatToISO(today);
         const istodaysNode = day.isoDate === formatToISO(today);
 
         return `${
           upcommingDay
-            ? `<button class="day-node upcomming" style="display:flex;align-items:center;justify-content:center;">
-            <i class='fas fa-lock upcomming'style="font-size:16px;color: var(--bg-surface)"></i>
-            <!-- <span class="day-name" style="font-size: 12px;font-weight:400;"></span> -->
-            </button>`
+            ? `<button disabled class="day-node upcomming">
+              <i class='fas fa-lock upcomming'style="font-size:16px;color: var(--bg-surface)"></i>
+              </button>`
             : `<button 
               class="day-node
               ${isCompleted ? "active-completed" : ""} 
-              ${upcommingDay ? "upcomming-day" : ""}
               ${istodaysNode ? "today-node" : ""}
               ${isCompleted && istodaysNode ? "active-today" : ""}" 
-              data-habit-id="${habit.id}"data-date="${day.isoDate}"
-              ${istodaysNode ? "" : "disabled"}
-      ">
-        <span class="day-name"
-          >${day.dayName} <span class="date-box">- ${day.dateNum}</span></span
-        >
-        <span class="dot-indicator"></span>
-      </button>`
+              data-habit-id="${habit.id}" data-date="${day.isoDate}">
+                <span class="day-name"
+                  >${day.dayName} <span class="date-box">- ${day.dateNum}</span></span
+                >
+                <span class="dot-indicator"></span>
+              </button>`
         }`;
       })
       .join("");
@@ -118,12 +207,15 @@ function renderHabitCard() {
       <div class="week-strip" id="week-strip">${dayNodesHtml}</div>`;
     habitContainer.innerHTML += html;
   });
+  calculateMaxStreak();
 }
 
 function saveAndRefresh() {
   localStorage.setItem("atomic-habits", JSON.stringify(habits));
   renderHabitCard();
   calculateDoneToday();
+  calculateMaxStreak();
+  updateProgressRing();
 }
 
 function addHabit() {
@@ -255,53 +347,6 @@ function showCustomPopup({
     onConfirm();
     closePopup();
   });
-}
-function calculateStreak(habit, dayDates, clickedISO) {
-  const todayISO = formatToISO(today);
-  let currentIndex = dayDates.findIndex((day) => day.isoDate === todayISO);
-
-  if (currentIndex === -1) {
-    currentIndex = dayDates.length - 1;
-  }
-  let streakCount = 0;
-
-  while (currentIndex >= 0) {
-    const checkDate = dayDates[currentIndex].isoDate;
-
-    if (habit.history[checkDate] === true) {
-      streakCount ++;
-      currentIndex --;
-    } else {
-      break;
-    }
-  }
-  return streakCount;
-}
-function addToHistory(habitId, isoDate) {
-  const dayDates = weekTracker();
-  let habit = habits.find(habit => {return habit.id === habitId || String(habit.id) === String(habitId);});
-  if (habit.history[isoDate] === true) {
-    habit.history[isoDate] = false;
-  } else {
-    habit.history[isoDate] = true;
-  }
-  habit.streak = calculateStreak(habit, dayDates, isoDate);
-  saveAndRefresh();
-}
-
-function calculateDoneToday() {
-  const today = new Date();
-  let doneToday = 0;
-  const isoDate = formatToISO(today);
-  habits.forEach((habit) => {
-    if (habit.history) {
-      if (habit.history[isoDate] === true) {
-        doneToday += 1;
-      }
-    }
-  });
-  console.log(doneToday);
-  completedCount.innerHTML = doneToday;
 }
 
 const categoryTabs = document.querySelectorAll(".category-tabs .tab-item");
