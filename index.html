@@ -11,6 +11,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -74,15 +75,21 @@
               <!-- Left Side Accent Indicator -->
               <div class="accent-bar"></div>
               <div>
-                <p>Hydrate 3L Water</p>
+                <p contenteditable>Hydrate 3L Water</p>
                 <span class="category-tag">Fitness</span>
               </div>
               <div class="streak-pill">⚡3</div>
             </div>
-            <i
-              id="delete-habit"
-              class="fa-regular fa-trash-can delete-habit"
-            ></i>
+            <div class="edit-delete-container">
+              <i
+                id="edit-habit"
+                class="fa-solid fa-pen-to-square edit-habit"
+              ></i>
+              <i
+                id="delete-habit"
+                class="fa-regular fa-trash-can delete-habit"
+              ></i>
+            </div>
           </div>
 
           <!-- Horizontal Weekly Checkers -->
@@ -134,26 +141,47 @@
       </main>
       <section class="input-section">
         <div class="add-habit-modal">
+          <!-- Preset section -->
           <div class="form-section preset-section">
             <div class="section-label productivity-clr">Quick Presets</div>
             <div class="preset-row">
-              <button class="preset-btn preset-btn-mind">
+              <button class="preset-btn preset-btn-mind" data-category="Mind" data-name="Morning Meditation">
                 <span class="preset-dot mind-bg"></span> Morning Meditation
               </button>
-              <button class="preset-btn preset-btn-fitness">
+              <button class="preset-btn preset-btn-fitness" data-category="Fitness" data-name="Daily Workout">
                 <span class="preset-dot fitness-bg"></span> Daily Workout
               </button>
-              <button class="preset-btn preset-btn-productivity">
-                <span class="preset-dot productivity-bg"></span> 30min Deep work
+              <button class="preset-btn preset-btn-productivity" data-category="Productivity" data-name="30 min Deep work">
+                <span class="preset-dot productivity-bg"></span> 30 min Deep work
               </button>
             </div>
           </div>
-
-          <!-- Input section -->
+          <!-- Categories -->
+          <div class="form-section category-section">
+            <label class="section-label fitness-clr">Category</label>
+            <div class="category-tabs">
+              <button
+                type="button"
+                data-category="Fitness"
+                class="tab-item active"
+              >
+                Fitness
+              </button>
+              <button type="button" class="tab-item" data-category="Mind">
+                Mind
+              </button>
+              <button
+                type="button"
+                class="tab-item"
+                data-category="Productivity"
+              >
+                Productivity
+              </button>
+            </div>
+          </div>
+          <!-- Form section -->
           <form class="form-section" id="habit-form">
-            <label
-              for="habit-name-field"
-              class="section-label habit-name mind-clr"
+            <label for="habit-input" class="section-label habit-name mind-clr"
               >Habit Name</label
             >
             <input
@@ -164,23 +192,27 @@
               autocomplete="off"
             />
           </form>
-
-          <div class="form-section">
-            <label class="section-label fitness-clr">Category</label>
-            <div class="category-tabs">
-              <button type="button" class="tab-item active">Fitness</button>
-              <button type="button" class="tab-item">Mind</button>
-              <button type="button" class="tab-item">Productivity</button>
-            </div>
-          </div>
-          <div role="button" class="btn-submit-habit">
-              Add Habit Tracker
-              <div class="decor-line"></div>
-          </div>
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit-habit" id="habit-submit-btn">
+            Add Habit Tracker
+            <div class="decor-line"></div>
+          </button>
         </div>
       </section>
     </div>
-
+    <!-- Custom Pop up -->
+    <div id="custom-popup" class="popup-overlay">
+      <div class="popup-content">
+        <p id="popup-title">Heading</p>
+        <button id="modal-cancel-btn">
+          <i class="fa-solid fa-square-xmark"></i>
+        </button>
+        <div id="popup-body"></div>
+        <div id="popup-actions">
+          <button id="modal-confirm-btn">Confirm</button>
+        </div>
+      </div>
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>

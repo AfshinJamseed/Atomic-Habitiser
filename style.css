@@ -13,7 +13,7 @@
   --accent-productivity: #f59e0b;
   --accent-mind: #3b82f6;
 
-  --accent-danger: rgba(186, 0, 0);
+  --accent-danger: rgba(186, 0, 0, 0.856);
   --accent-streak-badge: #ffe0b2;
   --accent-streak-bg: #2d2417;
 
@@ -287,7 +287,7 @@ circle {
   border-bottom-left-radius: 0px;
   padding: 16px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-  transition: all .15s ease;
+  transition: all 0.15s ease;
 }
 .habit-row-card:hover {
   transform: translateX(2px);
@@ -313,13 +313,13 @@ circle {
   border-radius: 999px;
   align-self: center;
 }
-.fitness .accent-bar{
+.fitness .accent-bar {
   background: var(--accent-fitness);
 }
-.mind .accent-bar{
+.mind .accent-bar {
   background: var(--accent-mind);
 }
-.productivity .accent-bar{
+.productivity .accent-bar {
   background: var(--accent-productivity);
 }
 .habit-meta p {
@@ -345,14 +345,28 @@ circle {
   justify-content: center;
   align-items: center;
 }
+.edit-habit {
+  align-self: center;
+  filter: drop-shadow(0 0 2px var(--accent-mind));
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  margin-right: 5px;
+  transform: scale(1.05);
+}
 .delete-habit {
   align-self: center;
-  filter: drop-shadow(0 0 3px var(--accent-danger));
+  filter: drop-shadow(1px 1px 3px var(--accent-danger));
   cursor: pointer;
-  transition: all .15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+  transform: scale(1.05);
 }
 .delete-habit:hover {
+  filter: none;
   color: var(--accent-danger);
+}
+.edit-habit:hover {
+  filter: none;
+  color: var(--accent-mind);
 }
 .week-strip {
   display: flex;
@@ -362,18 +376,40 @@ circle {
   flex: 1;
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: var(--border-radius-sm);
   padding: min(1.1em, 50%) min(0.1em, 50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+}
+.day-node.upcomming {
+  transition: all 0.15s ease;
+}
+.day-node.upcomming:hover {
+  border-left: none;
+}
+.day-node.upcomming:hover .fas.upcomming {
+  transform: scale(1.05);
+}
+.day-node.today-node {
+  border-color: var(--text-muted);
+  filter: drop-shadow(0 0 5px var(--accent-danger));
+}
+.fitness .day-node.today-node:hover,.fitness .day-node.active-today {
+  filter: drop-shadow(0 0 5px var(--accent-fitness));
+}
+.mind .day-node.today-node:hover,.mind .day-node.active-today {
+  filter: drop-shadow(0 0 5px var(--accent-mind));
+}
+.productivity .day-node.today-node:hover,.productivity .day-node.active-today {
+  filter: drop-shadow(0 0 5px var(--accent-productivity));
 }
 .day-name {
   font-size: 12px;
-  color: var(--text-main);
+  color: var(--text-muted);
   font-weight: 500;
 }
 .dot-indicator {
@@ -383,37 +419,42 @@ circle {
   border-radius: 50%;
   transition: all 0.15s ease-out;
 }
+.day-node:hover .dot-indicator {
+  scale: 1.2;
+}
+/* 3cases for categories */
 .fitness .day-node.active-completed .day-name {
   color: var(--accent-fitness);
+}
+.mind .day-node.active-completed .day-name {
+  color: var(--accent-mind);
+}
+.productivity .day-node.active-completed .day-name {
+  color: var(--accent-productivity);
+}
+/* 3cases for categories */
+.mind .day-node.active-completed .dot-indicator {
+  background-color: var(--accent-mind);
 }
 .fitness .day-node.active-completed .dot-indicator {
   background-color: var(--accent-fitness);
 }
-.fitness .day-node:hover {
-  border-color: var(--accent-fitness);
-}
-
-.mind .day-node.active-completed .day-name {
-  color: var(--accent-mind);
-}
-.mind .day-node.active-completed .dot-indicator {
-  background-color: var(--accent-mind);
-}
-.mind .day-node:hover {
-  border-color: var(--accent-mind);
-}
-
-.productivity .day-node.active-completed .day-name {
-  color: var(--accent-productivity);
-}
 .productivity .day-node.active-completed .dot-indicator {
   background-color: var(--accent-productivity);
 }
-.productivity .day-node:hover {
-  border-color: var(--accent-productivity);
+/* 3 cases */
+.fitness .day-node:hover {
+  border-left: 3px solid var(--accent-fitness);
 }
-.day-node:hover .dot-indicator {
-  scale: 1.2;
+.mind .day-node:hover {
+  border-left: 3px solid var(--accent-mind);
+}
+.productivity .day-node:hover {
+  border-left: 3px solid var(--accent-productivity);
+}
+/* Common case */
+.day-node:hover {
+  transform: translate();
 }
 /* Bottom Layer */
 .add-habit-modal {
@@ -539,39 +580,65 @@ circle {
 }
 .tab-item:hover {
   color: var(--text-main);
-  opacity: .9;
+  opacity: 0.9;
 }
-.tab-item.active {
-  background: var(--accent-fitness);
-  color: var(--text-main);
+.tab-item.active[data-category="Fitness"],
+.tab-item.active[data-categrory="Fitness"] {
+  border: 1px solid var(--accent-fitness);
+  color: var(--accent-fitness);
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.tab-item.active[data-category="Mind"],
+.tab-item.active[data-categrory="Mind"] {
+  border: 1px solid var(--accent-mind);
+  color: var(--accent-mind);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.tab-item.active[data-category="Productivity"],
+.tab-item.active[data-categrory="Productivity"] {
+  border: 1px solid var(--accent-productivity);
+  color: var(--accent-productivity);
+  background: rgba(245, 158, 11, 0.12);
 }
 .btn-submit-habit {
-  /* background: var(--accent-mind); */
-  color: var(--text-main);
+  background: transparent;
+  color: var(--text-muted);
   border: none;
   border-radius: 7px;
-  padding: 1rem 0;
-  font-size: 1rem;
+  padding: 1rem 1rem;
+  font-size: clamp(1rem, 2vw, 1.4rem);
   font-family: Climate crisis;
   border: 1px solid var(--border-subtle);
   font-weight: 600;
   cursor: pointer;
-  width: 40%;
+  width: 80%;
   letter-spacing: 1.5px;
   text-align: center;
+  border-left: 3px solid var(--accent-fitness);
   align-self: center;
   overflow: hidden;
   transition:
     background-color 0.2s ease-out,
-    transform .35s ease,
-    filter .15s;
+    transform 0.35s ease,
+    all 0.35s ease;
   position: relative;
+  white-space: nowrap;
 }
 .btn-submit-habit:hover {
-  color: var(--text-main);
-  background: var(--accent-mind);
-  transform: translateY(-2px);
-  filter: drop-shadow(0 0 3px var(--accent-fitness));
+  color: var(--accent-mind);
+  background: linear-gradient(90deg, rgb(38, 227, 221), rgb(12, 81, 231));
+  border-left: none;
+  border-right: 3px solid var(--accent-fitness);
+  border-top: none;
+  outline: none;
+  transform: translateY(-3px);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* box-shadow: -3px 0 1px var(--accent-productivity); */
+  /* box-shadow: 0 0 5px var(--accent-fitness); */
 }
 .btn-submit-habit::before {
   content: "";
@@ -581,11 +648,16 @@ circle {
   top: 0;
   width: 100%;
   left: -100%;
+  transform: rotate(0deg);
   pointer-events: none;
-  transition: left .5s ease;
+  transition: left 0.5s ease;
 }
-.btn-submit-habit:hover::before{
+.btn-submit-habit:hover::before {
   left: 100%;
+}
+.btn-submit-habit:active {
+  transform: scale(0.99);
+  /* border: none; */
 }
 .submit-group {
   width: 100%;
@@ -594,15 +666,213 @@ circle {
   position: relative;
   align-items: center;
 }
-.decor-line{
+.decor-line {
   background: var(--accent-productivity);
-  height: 4px;
+  height: 3px;
   border-radius: 1px;
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 20%;
-  transition: all .65s ease-out;
+  transition: all 0.65s ease-out;
 }
 .btn-submit-habit:hover .decor-line {
   width: 100%;
+  height: 4px;
+}
+/* Custom pop up overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 13, 18, 0.75);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+.popup-content {
+  background: var(--habit-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-lg);
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.7),
+    0 0 15px rgba(3, 162, 197, 0.5) inset;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+#popup-title {
+  font-size: 1.25rem;
+  font-weight: 300;
+  width: 90%;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 16px;
+  padding-bottom: 5px;
+  padding-right: 30px;
+  text-align: left;
+  font-family: Climate Crisis;
+}
+#popup-body p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+}
+#modal-cancel-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+#modal-cancel-btn:hover {
+  color: var(--accent-danger);
+  transform: scale(1.1);
+}
+#popup-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+#modal-confirm-btn {
+  background: linear-gradient(90deg, rgb(38, 227, 221), rgb(12, 81, 231));
+  color: var(--accent-streak-badge);
+  border: none;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  width: 90%;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.556);
+  transform: translateY(-2px);
+}
+#modal-confirm-btn:hover {
+  opacity: 0.9;
+  transform: translate(0);
+  box-shadow: none;
+}
+
+#modal-confirm-btn:active {
+  transform: scale(0.97);
+}
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+/* Dropdown using modern css */
+.edit-dropdown {
+  appearance: base-select;
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 14px 16px;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-main);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  anchor-name: --edit-dropdown-anchor;
+}
+::picker(select) {
+  appearance: base-select;
+  background: var(--bg-primary);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  position-anchor: --edit-dropdown-anchor;
+  top: anchor(bottom);
+  left: anchor(left);
+  right: anchor(right);
+  margin-top: 4px;
+}
+selectedcontent i {
+  margin-right: 10px;
+}
+selectedcontent {
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.edit-dropdown option {
+  display: flex;
+  border-radius: 5px;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  padding: 10px 13px;
+  transition: all 0.25s ease;
+  margin-bottom: 2px;
+}
+.edit-dropdown option:hover,
+option:checked {
+  background: var(--bg-surface);
+}
+.edit-dropdown option:focus-visible,
+.edit-dropdown option:checked {
+  background: var(--bg-surface);
+}
+.edit-dropdown::picker-icon {
+  transition: all 0.3s ease;
+}
+.edit-dropdown:open::picker-icon {
+  rotate: 180deg;
+}
+.edit-dropdown option::checkmark {
+  display: none;
+}
+body.modal-open {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
 }
