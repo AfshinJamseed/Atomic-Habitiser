@@ -1,44 +1,40 @@
 # Atomic Habitizer
 
-## Features
+## 🎯 Features
 
-1. ### Weekly Habit Tracker
+1. ### 📅 Weekly Habit Tracker
     - View habits across the current week.
     - Mark completed days with a single click.
     - Upcoming dates are locked automatically.
-2. ### Habit Streaks
-    - Tracks the current streak for each habit
+2. ### ⚡ Habit Streaks
+    - Tracks the current streak for each habit *(this was hard)*
     - Streaks are calculated from the habits complete history
     - They are updated even when an habit is removed
-3. ### Max Streaks
+3. ### 🚀 Max Streaks
     - Shows the longest current streak acros all habits
     - Automatically updates when an habit is toggled
-4. ### Dynamic Progress Rings
-    - Shows todays completion percentage visually
+4. ### 🪐 Dynamic Progress Rings
+    - Shows todays completion percentage visually *(this was hard too)*
     - Automatic updation
-5. ### Habit Management
+5. ### 👨‍💼 Habit Management
     - Create new habits
     - Edit habit names and categories
     - Comfirmation for deleting habits
     - Quick presets for common habits
-6. ### Categories
+6. ### 🧮 Categories
     - Fitness
     - Mind
     - Productivity
     - *custom categories will come in newer versions*
-7. ### Local Storage
+7. ### 🧺 Local Storage
     - Basic in-built browser storage
     - *update in newer versions*
-8. ### Modern UI
+8. ### 🎨 Modern UI
     - Dark dashboards
     - Glassmorphism
     - Mainly 3 color based indicating 3 categories
     - Animative interactions
     - Responsive Layout
-- Automatically calculates first and last date of a week *(this was hard)*
-- Automatically calculates how many habits are done today and how many are pending
-- Glowing effects for add button
-- Custom hover effects
 
 ## Tech Stack
 
