@@ -9,7 +9,7 @@ let habits = JSON.parse(localStorage.getItem("atomic-habits")) || [
 ];
 let today = new Date();
 let selectedCategory = "Fitness";
-today = new Date("2025-05-15T00:00:00");
+// today = new Date("2025-05-15T00:00:00");
 
 const week = document.getElementById("current-week");
 const habitContainer = document.getElementById("habits-container");
