@@ -2,34 +2,34 @@
 
 ## 🎯 Features
 
-1. ### 📅 Weekly Habit Tracker
+- ### 📅 Weekly Habit Tracker
     - View habits across the current week.
     - Mark completed days with a single click.
     - Upcoming dates are locked automatically.
-2. ### ⚡ Habit Streaks
+- ### ⚡ Habit Streaks
     - Tracks the current streak for each habit *(this was hard)*
     - Streaks are calculated from the habits complete history
     - They are updated even when an habit is removed
-3. ### 🚀 Max Streaks
+- ### 🚀 Max Streaks
     - Shows the longest current streak acros all habits
     - Automatically updates when an habit is toggled
-4. ### 🪐 Dynamic Progress Rings
+- ### 🪐 Dynamic Progress Rings
     - Shows todays completion percentage visually *(this was hard too)*
     - Automatic updation
-5. ### 👨‍💼 Habit Management
+- ### 👨‍💼 Habit Management
     - Create new habits
     - Edit habit names and categories
     - Comfirmation for deleting habits
     - Quick presets for common habits
-6. ### 🧮 Categories
+- ### 🧮 Categories
     - Fitness
     - Mind
     - Productivity
     - *custom categories will come in newer versions*
-7. ### 🧺 Local Storage
+- ### 🧺 Local Storage
     - Basic in-built browser storage
     - *update in newer versions*
-8. ### 🎨 Modern UI
+- ### 🎨 Modern UI
     - Dark dashboards
     - Glassmorphism
     - Mainly 3 color based indicating 3 categories
