@@ -9,7 +9,7 @@
 		integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<!-- <link rel="stylesheet" href="./style.css" /> -->
+	<link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
@@ -20,12 +20,14 @@
 			<div class="heading">
 				<span class="A">Atomic</span>
 				<span class="H">Habitizer</span>
+				<div class="version">
+					<p class="version-number">V3</p>
+				</div>
 			</div>
-
 			<!-- Main Navigation -->
 			<nav class="main-nav">
 				<button class="nav-item active">
-					<i class="fa-solid fa-house"></i>
+					<i class="fa-regular fa-house"></i>
 					<p class="nav-name">Dashboard</p>
 				</button>
 
@@ -55,31 +57,36 @@
 				</button>
 			</nav>
 
-			<!-- Todays Progress ring -->
-			<div class="section-progress">
-				<p class="progress-header">Todays Progress</p>
+			<!-- Todays Progress -->
+			<div class="today-section">
+				<div class="today-group">
+					<p class="today-name">Today</p>
+					<p class="date">Tue, 01 Jul</p>
+				</div>
+				<div class="section-progress">
+					<p class="progress-header">Today's Progress</p>
 
-				<div class="ring-container">
-					<svg width="76" height="76" viewBox="0 0 76 76">
-						<circle class="ring-track" cx="38" cy="38" r="32"></circle>
-						<circle id="progress-ring-fill" class="ring-fill" cx="38" cy="38" r="33"
-							style="stroke-dasharray: 201.06; stroke-dashoffset: 86.45"></circle>
-					</svg>
-					<div class="ring-label"><span class="percentage">62%</span></div>
+					<div class="ring">
+						<div class="ring-label">
+							<span class="percentage">62%</span>
+						</div>
+					</div>
+
+					<div class="done-stats">
+						<p>
+							<span id="completed-count">0</span> /
+							<span id="total-count">5</span> habits done
+						</p>
+						<p class="keep-going"> Keep Going 🚀</p>
+					</div>
+
 				</div>
 
-				<p>
-					<span id="completed-count">0</span> /
-					<span id="total-count">5</span>
-				</p>
-
-				<p class="keep-going">Keep Going 🚀</p>
+				<button class="quick-add-button">
+					<p>Quick add Habit</p>
+					<i class="fa-solid fa-plus"></i>
+				</button>
 			</div>
-
-			<button class="quick-add-button">
-				<p>Add New Habit</p>
-				<i class="fa-solid fa-plus"></i>
-			</button>
 		</aside>
 
 		<!-- Main Content -->
@@ -122,12 +129,12 @@
 
 			<section class="identities-section">
 				<div class="section-heading">
-					
+
 				</div>
 			</section>
 		</main>
 	</div>
-	<script src="./script.js"></script>
+	<!-- <script src="./script.js"></script> -->
 </body>
 
 </html>
