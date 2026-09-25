@@ -16,7 +16,7 @@
   <div class="app-container">
 
     <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar collapsed" id="sidebar">
       <div class="heading">
         <span class="A">Atomic</span>
         <span class="H">Habitizer</span>
@@ -24,21 +24,34 @@
 
       <!-- Main Navigation -->
       <nav class="main-nav">
-        <button class="nav-item active">
+        <a class="nav-item active">
           <i class="fa-regular fa-house"></i>
           <p class="nav-name">Dashboard</p>
-        </button>
+        </a>
 
-        <button class="nav-item">
+        <a class="nav-item">
           <i class="fa-solid fa-repeat"></i>
           <p class="nav-name">Habits</p>
-        </button>
+        </a>
 
-        <button class="nav-item">
+        <a class="nav-item">
+          <i class="fa-solid fa-user"></i>
+          <p class="nav-name">Identities</p>
+        </a>
+
+        <a class="nav-item">
+          <i class="fa-solid fa-book-open"></i>
+          <p class="nav-name">Laws</p>
+        </a>
+
+        <a class="nav-item">
           <i class="fa-solid fa-gear"></i>
           <p class="nav-name">Settings</p>
-        </button>
+        </a>
       </nav>
+      <button class="sidebar-toggle" aria-label="Collapse sidebar">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
 
       <!-- Todays Progress -->
       <div class="today-section">
@@ -73,7 +86,7 @@
 
     <!-- Main Content -->
     <main>
-      <header class="dashboard-header">
+      <header class="dashboard-header" id="top-section">
         <div class="header-greeting">
           <p>Welcome AFJ 👋 <br> <span>Small habits Big identity</span></p>
           <div class="stats-grid">
@@ -171,7 +184,6 @@
           </button>
         </div>
       </section>
-
       <section class="dashboard-grid">
         <div class="dashboard-left">
 
@@ -284,8 +296,7 @@
               <p>Add Habit (Use the 4 Laws)</p>
             </button>
           </section>
-
-          <section class="panel laws-panel">
+          <section id="law-section" class="panel laws-panel">
             <p class="panel-title">THE 4 LAWS OF BEHAVIOR CHANGE</p>
             <div class="laws">
               <a class="law law-1" target="_blank" href="https://jamesclear.com/atomic-habits/cheatsheet">
@@ -380,6 +391,34 @@
             </form>
           </dialog>
         </div>
+        <section id="settings-section" class="panel settings-panel" hidden>
+          <p class="panel-title">SETTINGS</p>
+
+          <div class="settings-row">
+            <div>
+              <p class="settings-label">Export your data</p>
+              <p class="settings-desc">Save your identities and habits as a JSON file.</p>
+            </div>
+            <button class="tool-btn export-btn"><i class="fa-solid fa-download"></i> Export</button>
+          </div>
+
+          <div class="settings-row">
+            <div>
+              <p class="settings-label">Import data</p>
+              <p class="settings-desc">Load a previously exported JSON file. This replaces your current data.</p>
+            </div>
+            <button class="tool-btn import-btn"><i class="fa-solid fa-upload"></i> Import</button>
+            <input type="file" class="import-file" accept="application/json" hidden>
+          </div>
+
+          <div class="settings-row danger">
+            <div>
+              <p class="settings-label">Reset all data</p>
+              <p class="settings-desc">Permanently deletes every identity and habit.</p>
+            </div>
+            <button class="tool-btn reset-btn"><i class="fa-solid fa-trash"></i> Reset</button>
+          </div>
+        </section>
       </section>
     </main>
   </div>

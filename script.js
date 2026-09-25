@@ -544,6 +544,106 @@ function updateTopStats() {
   if (values[2]) values[2].innerHTML = `<i class="fa-regular fa-star"></i> ${totalXp.toLocaleString()}`;
 }
 ////////////////////////
+//////////////////////// Settings section this was claude's idea to make settings fill
+document.querySelector(".export-btn").addEventListener('click', () => {
+  const data = JSON.stringify({identities, habits}, null, 2);
+  const blob = new Blob([data], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "atomic-habitizer-backup.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+let importFileInput = document.querySelector(".import-file");
+document.querySelector(".import-btn").addEventListener("click", e => importFileInput.click());
+importFileInput.addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      if (!Array.isArray(parsed.identities) || !Array.isArray(parsed.habits)) {
+        alert("This file dosent look like a valid atomic backup file");
+        return;
+      }
+      if (!confirm("This replaces your current identities and habits. Continue?")) return;
+      identities = parsed.identities;
+      habits = parsed.habits;
+      save();
+      alert("Import Succesful. ");
+    } catch (error) {
+      alert("Couldn't read the file - make sure it's a valid JSON export");
+    }
+  }
+  reader.readAsText(file);
+  importFileInput = "";
+})
+document.querySelector(".reset-btn").addEventListener("click", () => {
+  if (!confirm("This deletes all identities and habits permanently. Continue?")) return;
+  localStorage.removeItem("atomic-identities");
+  localStorage.removeItem("atomic-habits");
+  location.reload();
+});
+////////////////////////
+
+//////////////////////// NAVIGATION
+const navItems = document.querySelectorAll(".nav-item");
+const dashboardHeaderElem = document.querySelector(".dashboard-header");
+const identitySectionElem = document.querySelector(".identity-section");
+const habitsPanelElem = document.querySelector(".habits-panel");
+const lawsPanelElem = document.querySelector(".laws-panel");
+const settingsPanelElem = document.querySelector(".settings-panel");
+function setActiveNav(index) {
+  navItems.forEach(item => item.classList.remove("active"));
+  navItems[index].classList.add("active");
+}
+function setPanels({ header, identity, habitsPanel, lawsPanel, settings }) {
+  dashboardHeaderElem.hidden = !header;
+  identitySectionElem.hidden = !identity;
+  habitsPanelElem.hidden = !habitsPanel;
+  lawsPanelElem.hidden = !lawsPanel;
+  settingsPanelElem.hidden = !settings;
+}
+function showDashboard() {
+  setActiveNav(0);
+  setPanels({ header: true, identity: true, habitsPanel: true, lawsPanel: true, settings: false });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function showHabits() {
+  setActiveNav(1);
+  setPanels({ header: false, identity: false, habitsPanel: true, lawsPanel: false, settings: false });
+}
+function showIdentities() {
+  setActiveNav(2);
+  setPanels({ header: false, identity: true, habitsPanel: false, lawsPanel: false, settings: false });
+}
+function showLaws() {
+  setActiveNav(3);
+  setPanels({ header: false, identity: false, habitsPanel: false, lawsPanel: true, settings: false });
+}
+function showSettings() {
+  setActiveNav(4);
+  setPanels({ header: false, identity: false, habitsPanel: false, lawsPanel: false, settings: true });
+}
+navItems.forEach((item, i) => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    if (i === 0) showDashboard();
+    else if (i === 1) showHabits();
+    else if (i === 2) showIdentities();
+    else if (i === 3) showLaws();
+    else if (i === 4) showSettings();
+  })
+})
+// Nav state Toggle
+document.querySelector(".sidebar-toggle").addEventListener('click', () => {
+  document.querySelector(".sidebar").classList.toggle("collapsed");
+}
+)
+////////////////////////
 function applyLevelUps(identity) {
   while (identity.xp >= identity.xpNext) {
     identity.xp -= identity.xpNext;
