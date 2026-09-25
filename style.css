@@ -491,7 +491,7 @@ main {
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--identity-border);
   border-radius: .65rem;
-  min-width: 250px;
+  min-width: fit-content;
   transition: all .2s ease;
   box-shadow:
     0 10px 30px -10px rgba(0, 0, 0, 0.7),
@@ -503,7 +503,7 @@ main {
   border-color: var(--identity-color);
 }
 
-.identity:hover .identity-arrow {
+.identity-head:hover .identity-arrow {
   color: var(--identity-color);
 }
 
@@ -511,6 +511,7 @@ main {
   --identity-soft: color-mix(in srgb, var(--identity-color) 12%, transparent);
   --identity-border: color-mix(in srgb, var(--identity-color) 30%, var(--bg-primary));
 }
+
 .identity-head {
   display: flex;
   align-items: center;
@@ -1037,10 +1038,38 @@ main {
   color: var(--text-main);
   padding: 1.3rem;
   width: min(24rem, 90vw);
+  margin: auto;
 }
 
 .habit-modal::backdrop {
   background: rgba(0, 0, 0, .6);
+}
+
+.habit-modal,
+.identity-modal {
+  position: relative;
+  /* anchors the close button */
+}
+
+.modal-close {
+  position: absolute;
+  top: .9rem;
+  right: .9rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: .3rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: .85rem;
+}
+
+.modal-close:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, .06);
 }
 
 .modal-title {

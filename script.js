@@ -1,29 +1,6 @@
-let identities = JSON.parse(localStorage.getItem('atomic-identities')) || [
-  {
-    id: "athlete",
-    name: "The Identity (ex. Athelete)",
-    icon: "fa-person-running",
-    color: "#00d99b",
-    level: 4,
-    xp: 720,
-    xpNext: 1000,
-    votes: 47,
-    title: "Contender"
-  },
-];
+let identities = JSON.parse(localStorage.getItem('atomic-identities')) || [];
 
-let habits = JSON.parse(localStorage.getItem("atomic-habits")) || [
-  {
-    id: "h1",
-    identityId: "developer",
-    name: "Code for 30 mins",
-    cue: "After I have my morning coffee • In my room",
-    xp: 20,
-    vote: 1,
-    streak: 7,
-    doneToday: false
-  },
-];
+let habits = JSON.parse(localStorage.getItem("atomic-habits")) || [];
 
 let activeFilter = 'all';
 let selectedIdentity = null;
@@ -42,6 +19,8 @@ function save() {
   localStorage.setItem("atomic-habits", JSON.stringify(habits));
   renderHabits();
   renderIdentities();
+  renderChips();
+  updateTopStats();
 }
 
 const formatDate = (date) => {
@@ -213,7 +192,7 @@ function renderIdentities() {
       <p><span class="vote-count">${identity.votes}</span> votes cast</p>
     </div>
     `;
-    card.querySelector('.identity-arrow').addEventListener('click', (e) => {
+    card.querySelector('.identity-head').addEventListener('click', (e) => {
       e.stopPropagation();
       openIdentityMenu(identity.id, e.currentTarget);
     })
@@ -239,11 +218,11 @@ function openIdentityMenu(identityId, anchorCard) {
 
   menu.querySelector(".delete").addEventListener('click', () => {
     identities = identities.filter(i => i.id !== identityId);
-    save()
+    habits = habits.filter(h => h.identityId !== identityId);
+    save();
     renderIdentities();
     menu.remove();
   })
-
   setTimeout(() => {
     document.addEventListener("click", function closeMenu(e) {
       if (!menu.contains(e.target)) {
@@ -303,13 +282,17 @@ function clampLightness(hex) {
   const l = (Math.max(r, g, b) + Math.min(r, g, b)) / 2;
   return (l < 0.25 || l > 0.85) ? "#7c5cff" : hex;
 } //AI got me here
-renderIdentities();
+/////////////
 ///////////// Habits Handlers
 function renderHabits() {
   const table = document.querySelector(".habit-table");
   table.querySelectorAll(".habit-row:not(.habit-row-head)").forEach(row => row.remove());
 
-  habits.forEach(habit => {
+  const visible = activeFilter === "all"
+    ? habits
+    : habits.filter(h => h.identityId === activeFilter);
+
+  visible.forEach(habit => {
     const identity = identities.find(i => i.id === habit.identityId);
     if (!identity) return;
 
@@ -341,20 +324,34 @@ function toggleHabit(habitId) {
   habit.doneToday = !habit.doneToday;
   if (habit.doneToday) {
     habit.streak += 1;
+    habit.lastCompleteDate = formatToISO(today);
     identity.xp += habit.xp;
     identity.votes += habit.vote;
-    applyLevelUps(identity)
+    applyLevelUps(identity);
   } else {
     habit.streak = Math.max(0, habit.streak - 1);
     identity.xp = Math.max(0, identity.xp - habit.xp);
-    habit.streak = Math.max(0, identity.votes - habit.vote)
+    identity.votes = Math.max(0, identity.votes - habit.vote);
   }
   save();
+}
+function resetDailyCompletion() {
+  const todayISO = formatToISO(today);
+  let changed = false;
+
+  habits.forEach(habit => {
+    if (habit.doneToday && habit.lastCompleteDate !== todayISO) {
+      habit.doneToday = false;
+      changed = true;
+    }
+  });
+
+  if (changed) save();
 }
 document.querySelector(".habit-table").addEventListener('click', (e) => {
   const checkBtn = e.target.closest(".habit-check");
   const moreBtn = e.target.closest(".habit-more");
-  
+
   if (checkBtn) {
     const row = checkBtn.closest(".habit-row");
     toggleHabit(row.dataset.id);
@@ -362,7 +359,7 @@ document.querySelector(".habit-table").addEventListener('click', (e) => {
   if (moreBtn) {
     e.stopPropagation();
     const row = moreBtn.closest(".habit-row");
-    openHabitMenu(row.dataset,moreBtn);
+    openHabitMenu(row.dataset.id, moreBtn);
   }
 });
 
@@ -375,207 +372,184 @@ function openHabitMenu(habitId, anchorElem) {
     <button class="row-menu-item delete"><i class="fa-solid fa-trash"></i> Delete</button>`;
   document.body.appendChild(menu);
 
-  const rect = anchorEl.getBoundingClientRect();
+  const rect = anchorElem.getBoundingClientRect();
   menu.style.top = `${rect.bottom + window.scrollY + 4}px`;
   menu.style.left = `${rect.left + window.scrollX - menu.offsetWidth + rect.width}px`;// Used the same logic before here
+
+  menu.querySelector(".edit").addEventListener('click', () => {
+    openHabitModal(habits.find(h => h.id === habitId))
+    menu.remove();
+    save();
+  })
+  menu.querySelector(".delete").addEventListener('click', () => {
+    habits = habits.filter(h => h.id !== habitId)
+    save();
+    menu.remove();
+  });
+  setTimeout(() => {
+    document.addEventListener("click", function closeMenu(e) {
+      if (!menu.contains(e.target)) {
+        menu.remove();
+        document.removeEventListener("click", closeMenu);
+      }
+    });
+  }, 0);
 }
 
-function applyLevelUps(identity) {
-  while (identity.xp >= identity.xpNext) {
-    identity.xp -= identity.xpNext;
-    identity.level ++;
-    identity.xpNext = xpForNextLevel(identity.level);
+let editingHabit = null;
+const habitModal = document.querySelector(".habit-modal");
+function renderIdentityPicker() {
+  const picker = habitModal.querySelector(".identity-picker");
+  picker.innerHTML = "";
+  if (identities.length > 0) {
+    identities.forEach(identity => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "identity-pick";
+      btn.style.setProperty("--identity-color", identity.color);
+      btn.innerHTML = `
+        <span class="identity-pick-logo"><i class="fa-solid ${identity.icon}"></i></span>
+        <span>${identity.name}</span>`;
+      btn.addEventListener("click", () => goToHabitStep2(identity));
+      picker.appendChild(btn);
+    });
+  } else {
+    picker.innerHTML = "Add an Identity First";
   }
 }
+function goToHabitStep2(identity) {
+  selectedIdentity = identity;
+  habitModal.querySelector('[data-step="1"]').hidden = true;
+  habitModal.querySelector('[data-step="2"]').hidden = false;
+  habitModal.querySelector('.picked-identity').textContent = `Identity: ${identity.name}`;
+}
+function openHabitModal(habit = null) {
+  editingHabit = habit;
+  renderIdentityPicker();
 
+  const form = habitModal.querySelector(".habit-form");
+  const step2 = habitModal.querySelector('[data-step="2"]');
+
+  if (habit) {
+    const identity = identities.find(i => i.id === habit.identityId);
+    goToHabitStep2(identity);
+    form.querySelector('[name="name"]').value = habit.name;
+    form.querySelector('[name="cue"]').value = "";
+    form.querySelector('[name="location"]').value = habit.location ? habit.location : "";
+    form.querySelector('[name="xp"]').value = habit.xp;
+    form.querySelector('[name="vote"]').value = habit.vote;
+    habitModal.querySelector(".save-btn").textContent = "Save Changes";
+  } else {
+    habitModal.querySelector('[data-step="1"]').hidden = false;
+    step2.hidden = true;
+    form.reset();
+    habitModal.querySelector(".save-btn").textContent = "Create Habit"
+  }
+  habitModal.showModal();
+}
+habitModal.querySelector(".modal-close").addEventListener('click', () => {
+  habitModal.close();
+  editingHabit = null;
+  selectedIdentity = null;
+})
+habitModal.querySelector(".back-btn").addEventListener('click', () => {
+  habitModal.querySelector('[data-step="2"]').hidden = true;
+  habitModal.querySelector('[data-step="1"]').hidden = false;
+})
 function xpForNextLevel(level) {
   return level * 200 + 200;
 }
-
-function saveAndRefresh() {
-  localStorage.setItem("atomic-habits", JSON.stringify(habits));
-  calculateDoneToday();
-  calculateMaxStreak();
-  updateProgressRing();
-}
-
-function addHabit() {
-  const habitInput = document.getElementById("habit-input");
-  const habitName = habitInput.value.trim();
-  console.log(habitName);
-  if (!habitName) return alert("Enter A Name first");
-  const newHabit = {
-    id: crypto.randomUUID(),
-    name: habitName,
-    streak: 0,
-    category: selectedCategory,
-    history: {},
-  };
-  habits.push(newHabit);
-  habitInput.value = "";
-  saveAndRefresh();
-}
-
-function removeHabit(habitId) {
-  showCustomPopup({
-    title: "Delete This Habit",
-    bodyHtml:
-      "<p style='color: var(--text-muted); font-size: 15px;'>Are you sure you want to delete this tracker? <br> This clear sequence cannot be undone.</p>",
-    confirmText: "Delete",
-    confirmBg: "var(--accent-danger)",
-    onConfirm: () => {
-      let newArray = habits.filter(
-        (habit) => String(habit.id) !== String(habitId),
-      );
-      habits = newArray;
-      saveAndRefresh();
-    },
-  });
-}
-
-function editHabit(habitId) {
-  const habit = habits.find((habit) => String(habit.id) === String(habitId));
-  if (!habit) return null;
-  showCustomPopup({
-    title: "Edit Habit",
-    bodyHtml: `
-    <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; text-align: left;">
-        <div class="form-section">
-          <label class="section-label" style="color: var(--text-muted); font-size: 11px;">HABIT NAME</label>
-          <input type="text" id="popup-edit-input" value="${habit.name}" 
-                 class="habit-input-text" style="width: 100%;" autocomplete="off" />
-        </div>
-        
-        <div class="form-section">
-          <label class="section-label" style="color: var(--text-muted); font-size: 11px;">CATEGORY</label>
-          <select id="popup-edit-category" class="edit-dropdown">
-            <button>
-              <selectedcontent></selectedcontent>
-            </button>
-            <option value="Fitness" ${habit.category === "Fitness" ? "selected" : ""}>
-                <i class="fa-solid fa-dumbbell" style="color: rgb(99, 230, 190);"></i>              
-              Fitness
-            </option>
-            <option value="Mind" ${habit.category === "Mind" ? "selected" : ""}>
-              <i class="fa-solid fa-brain" style="color: rgb(116, 192, 252);"></i>
-              Mind
-            </option>
-            <option value="Productivity" ${habit.category === "Productivity" ? "selected" : ""}>
-              <i class="fa-solid fa-arrow-trend-up" style="color: rgb(255, 212, 59);"></i>
-              Productivity
-            </option>
-          </select>
-        </div>
-      </div>
-    `,
-    confirmText: "Save Changes",
-    confirmBg: "var(--accent-mind)",
-    onConfirm: () => {
-      const editInput = document.getElementById("popup-edit-input");
-      const categoryField = document.getElementById("popup-edit-category");
-
-      const updateName = editInput ? editInput.value.trim() : "";
-      const updateCategory = categoryField
-        ? categoryField.value
-        : habit.category;
-
-      if (!updateName) return alert("Habit name cannot be left blank");
-
-      habit.name = updateName;
-      habit.category = updateCategory;
-      saveAndRefresh();
-    },
-  });
-}
-function showCustomPopup({
-  title,
-  bodyHtml,
-  confirmText,
-  confirmBg,
-  onConfirm,
-}) {
-  const popup = document.getElementById("custom-popup");
-  const popupTitle = document.getElementById("popup-title");
-  const popupBody = document.getElementById("popup-body");
-  let confirmBtn = document.getElementById("modal-confirm-btn");
-  let cancelBtn = document.getElementById("modal-cancel-btn");
-
-  popupTitle.textContent = title;
-  popupBody.innerHTML = bodyHtml;
-  confirmBtn.textContent = confirmText || "Confirm";
-  confirmBtn.style.background = confirmBg || "var(--accent-mind)";
-
-  window.scrollTo({ top: 0, behavior: "instant" });
-  const scrollbarWidth =
-    window.innerWidth - document.documentElement.clientWidth;
-  document.body.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
-  document.body.classList.add("modal-open");
-
-  popup.style.display = "flex";
-
-  const closePopup = () => {
-    popup.style.display = "none";
-    document.body.classList.remove("modal-open");
-  };
-
-  const newConfirmBtn = confirmBtn.cloneNode(true);
-  const newCancelBtn = cancelBtn.cloneNode(true);
-  confirmBtn.replaceWith(newConfirmBtn);
-  cancelBtn.replaceWith(newCancelBtn);
-
-  newCancelBtn.addEventListener("click", closePopup);
-  newConfirmBtn.addEventListener("click", () => {
-    onConfirm();
-    closePopup();
-  });
-}
-
-const categoryTabs = document.querySelectorAll(".category-tabs .tab-item");
-
-categoryTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    categoryTabs.forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-    selectedCategory = tab.dataset.category || "Fitness";
-  });
-});
-/*
-// habitSubmitBtn.addEventListener("click", (e) => {
-//   e.preventDefault();
-//   addHabit();
-// });
-
-habitContainer.addEventListener("click", (e) => {
-  const deleteBtn = e.target.closest(".delete-habit");
-  const editBtn = e.target.closest(".edit-habit");
-  const dayNode = e.target.closest(".day-node");
-
-  if (deleteBtn) {
-    const habitId = deleteBtn.dataset.habitId;
-    removeHabit(habitId);
-  }
-  if (dayNode) {
-    addToHistory(dayNode.dataset.habitId, dayNode.dataset.date);
-  }
-  if (editBtn) {
-    const habitId = editBtn.dataset.habitId;
-    editHabit(habitId);
-  }
-});
-
-const quickPresets = document.querySelectorAll(".preset-row .preset-btn");
-quickPresets.forEach((preset) => {
-  preset.addEventListener("click", () => {
+habitModal.querySelector(".habit-form").addEventListener("submit", (e) => {
+  if (!selectedIdentity) return;
+  const data = new FormData(e.target);
+  const cueText = `
+    After ${data.get("cue")}${data.get("location") ? " • " + data.get("location") : ""}`
+  if (editingHabit) {
+    editingHabit.identityId = selectedIdentity.id;
+    editingHabit.name = data.get("name");
+    editingHabit.cue = cueText;
+    editingHabit.location = data.get('location');
+    editingHabit.xp = Number(data.get("xp"));
+    editingHabit.vote = Number(data.get("vote"));
+  } else {
     habits.push({
       id: crypto.randomUUID(),
+      identityId: selectedIdentity.id,
+      name: data.get("name"),
+      cue: cueText,
+      location: data.get("location"),
+      xp: Number(data.get("xp")),
+      vote: Number(data.get("vote")),
       streak: 0,
-      name: preset.dataset.name,
-      history: {},
-      category: preset.dataset.category,
-    });
-    saveAndRefresh();
-  });
+      doneToday: false,
+    })
+  }
+  save();
+  renderHabits();
+  editingHabit = null;
+  selectedIdentity = null;
+  e.target.reset();
 });
-saveAndRefresh();
-*/
+
+document.querySelector(".add-habit-btn").addEventListener("click", () => openHabitModal());
+document.querySelector(".quick-add-button").addEventListener("click", () => openHabitModal());
+/////////////////////////
+///////////////////////// Chips and filters handlers
+function renderChips() {
+  const bar = document.querySelector(".habit-filters");
+  bar.innerHTML = "";
+  const validHabits = habits.filter(h => identities.some(i => i.id === h.identityId));
+
+  const allChip = document.createElement("button");
+  allChip.className = "chip" + (activeFilter === "all" ? " active" : "");
+  allChip.dataset.filter = "all";
+  allChip.innerHTML = `All <span class="chip-count">${validHabits.length}</span>`
+  bar.appendChild(allChip);
+
+  identities.forEach(identity => {
+    const count = habits.filter(h => h.identityId === identity.id).length;
+    const chip = document.createElement("button");
+    chip.className = "chip" + (activeFilter === identity.id ? " active" : "");
+    chip.style.setProperty("--identity-color", identity.color);
+    chip.dataset.filter = identity.id;
+    chip.innerHTML = `${identity.name} <span class="chip-count">${count}</span>`;
+    bar.appendChild(chip);
+  })
+}
+document.querySelector(".habit-filters").addEventListener("click", (e) => {
+  const chip = e.target.closest(".chip");
+  if (!chip) return;
+  activeFilter = chip.dataset.filter;
+  renderChips();
+  renderHabits();
+});
+////////////////////////
+//////////////////////// Updating Top stats bar
+function updateTopStats() {
+  const total = habits.length;
+  const done = habits.filter(h => h.doneToday).length;
+  const percentage = total === 0 ? 0 : Math.round((done / total) * 100);
+  const bestStreak = habits.reduce((max, h) => Math.max(max, h.streak), 0);
+  const totalXp = identities.reduce((sum, id) => sum + id.xp + (id.level - 1) * 200, 0);
+  const completion = total === 0 ? 0 : Math.round((habits.filter(h => h.streak > 0).length / total) * 100);
+
+  document.querySelector(".ring").style.setProperty("--progress", `${percentage}%`);
+  document.querySelector(".percentage").textContent = `${percentage}%`;
+  document.getElementById("completed-count").textContent = done;
+  document.getElementById("total-count").textContent = total;
+
+  const values = document.querySelectorAll(".stats-grid .value");
+  if (values[0]) values[0].innerHTML = `<i class="fa-solid fa-crown"></i> ${bestStreak}`;
+  if (values[1]) values[1].innerHTML = `<i class="fa-solid fa-circle-check"></i> ${completion}%`;
+  if (values[2]) values[2].innerHTML = `<i class="fa-regular fa-star"></i> ${totalXp.toLocaleString()}`;
+}
+////////////////////////
+function applyLevelUps(identity) {
+  while (identity.xp >= identity.xpNext) {
+    identity.xp -= identity.xpNext;
+    identity.level++;
+    identity.xpNext = xpForNextLevel(identity.level);
+  }
+}
 save();
+resetDailyCompletion();
