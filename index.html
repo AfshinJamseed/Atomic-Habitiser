@@ -2,374 +2,386 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Atomic Habitizer</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
-		integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomic Habitizer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-	<link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
-	<div class="app-container">
+  <div class="app-container">
 
-		<!-- Sidebar -->
-		<aside class="sidebar" id="sidebar">
-			<div class="heading">
-				<span class="A">Atomic</span>
-				<span class="H">Habitizer</span>
-			</div>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="heading">
+        <span class="A">Atomic</span>
+        <span class="H">Habitizer</span>
+      </div>
 
-			<!-- Main Navigation -->
-			<nav class="main-nav">
-				<button class="nav-item active">
-					<i class="fa-regular fa-house"></i>
-					<p class="nav-name">Dashboard</p>
-				</button>
+      <!-- Main Navigation -->
+      <nav class="main-nav">
+        <button class="nav-item active">
+          <i class="fa-regular fa-house"></i>
+          <p class="nav-name">Dashboard</p>
+        </button>
 
-				<button class="nav-item">
-					<i class="fa-solid fa-repeat"></i>
-					<p class="nav-name">Habits</p>
-				</button>
+        <button class="nav-item">
+          <i class="fa-solid fa-repeat"></i>
+          <p class="nav-name">Habits</p>
+        </button>
 
-				<button class="nav-item">
-					<i class="fa-solid fa-gear"></i>
-					<p class="nav-name">Settings</p>
-				</button>
-			</nav>
+        <button class="nav-item">
+          <i class="fa-solid fa-gear"></i>
+          <p class="nav-name">Settings</p>
+        </button>
+      </nav>
 
-			<!-- Todays Progress -->
-			<div class="today-section">
-				<div class="today-group">
-					<p class="today-name">Today</p>
-					<p class="date">Tue, 01 Jul</p>
-				</div>
-				<div class="section-progress">
-					<p class="progress-header">Today's Progress</p>
+      <!-- Todays Progress -->
+      <div class="today-section">
+        <div class="today-group">
+          <p class="today-name">Today</p>
+          <p class="date">Tue, 01 Jul</p>
+        </div>
+        <div class="section-progress">
+          <p class="progress-header">Today's Progress</p>
 
-					<div class="ring">
-						<div class="ring-label">
-							<span class="percentage">62%</span>
-						</div>
-					</div>
+          <div class="ring">
+            <div class="ring-label">
+              <span class="percentage">62%</span>
+            </div>
+          </div>
 
-					<div class="done-stats">
-						<p>
-							<span id="completed-count">0</span> /
-							<span id="total-count">5</span> habits done
-						</p>
-						<p class="keep-going">Keep Going 🚀</p>
-					</div>
-				</div>
+          <div class="done-stats">
+            <p>
+              <span id="completed-count">0</span> /
+              <span id="total-count">5</span> habits done
+            </p>
+            <p class="keep-going">Keep Going 🚀</p>
+          </div>
+        </div>
 
-				<button class="quick-add-button">
-					<p>Quick add Habit</p>
-					<i class="fa-solid fa-plus"></i>
-				</button>
-			</div>
-		</aside>
+        <button class="quick-add-button">
+          <p>Quick add Habit</p>
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+    </aside>
 
-		<!-- Main Content -->
-		<main>
-			<header class="dashboard-header">
-				<div class="header-greeting">
-					<p>Welcome AFJ 👋 <br> <span>Small habits Big identity</span></p>
-					<div class="stats-grid">
-						<div class="stat-card">
-							<p class="value"><i class="fa-solid fa-crown" style="color: rgb(254, 254, 51);"></i> 7</p>
-							<p class="stat-name">Best Streak</p>
-						</div>
-						<div class="stat-card">
-							<p class="value"><i class="fa-solid fa-circle-check" style="color: rgb(65, 168, 65);"></i>
-								84%</p>
-							<p class="stat-name">Completion</p>
-						</div>
-						<div class="stat-card">
-							<p class="value"><i class="fa-regular fa-star" style="color: rgba(234, 255, 0, 0.825);"></i>
-								1,250</p>
-							<p class="stat-name">Total XP</p>
-						</div>
-					</div>
-				</div>
-			</header>
+    <!-- Main Content -->
+    <main>
+      <header class="dashboard-header">
+        <div class="header-greeting">
+          <p>Welcome AFJ 👋 <br> <span>Small habits Big identity</span></p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <p class="value"><i class="fa-solid fa-crown" style="color: rgb(254, 254, 51);"></i> 7</p>
+              <p class="stat-name">Best Streak</p>
+            </div>
+            <div class="stat-card">
+              <p class="value"><i class="fa-solid fa-circle-check" style="color: rgb(65, 168, 65);"></i>
+                84%</p>
+              <p class="stat-name">Completion</p>
+            </div>
+            <div class="stat-card">
+              <p class="value"><i class="fa-regular fa-star" style="color: rgba(234, 255, 0, 0.825);"></i>
+                1,250</p>
+              <p class="stat-name">Total XP</p>
+            </div>
+          </div>
+        </div>
+      </header>
 
-			<section class="identity-section">
-				<p class="identity-header">WHO YOU'RE BECOMING</p>
-				<div class="identities">
+      <section class="identity-section">
+        <p class="identity-header">WHO YOU'RE BECOMING</p>
+        <div class="identities">
 
-					<div class="identity athlete">
-						<div class="identity-head">
-							<div class="identity-logo">
-								<i class="fa-solid fa-person-running"></i>
-							</div>
-							<div class="identity-details">
-								<p class="identity-title">The Athlete</p>
-								<p class="identity-level"><span class="level">Level 4</span> · <span
-										class="level-identity">Contender</span></p>
-							</div>
-							<i class="fa-solid fa-chevron-right identity-arrow"></i>
-						</div>
-						<div class="identity-progress">
-							<div class="identity-progress-bar"><span style="width: 72%;"></span></div>
-							<p class="identity-count">720 / 1000 XP</p>
-						</div>
-						<div class="identity-vote">
-							<i class="fa-regular fa-circle-check"></i>
-							<p><span class="vote-count">47</span> votes cast</p>
-						</div>
-					</div>
+          <div class="identity athlete">
+            <div class="identity-head">
+              <div class="identity-logo">
+                <i class="fa-solid fa-person-running"></i>
+              </div>
+              <div class="identity-details">
+                <p class="identity-title">The Athlete</p>
+                <p class="identity-level"><span class="level">Level 4</span> · <span
+                    class="level-identity">Contender</span></p>
+              </div>
+              <i class="fa-solid fa-chevron-right identity-arrow"></i>
+            </div>
+            <div class="identity-progress">
+              <div class="identity-progress-bar"><span style="width: 72%;"></span></div>
+              <p class="identity-count">720 / 1000 XP</p>
+            </div>
+            <div class="identity-vote">
+              <i class="fa-regular fa-circle-check"></i>
+              <p><span class="vote-count">47</span> votes cast</p>
+            </div>
+          </div>
 
-					<div class="identity developer">
-						<div class="identity-head">
-							<div class="identity-logo">
-								<i class="fa-solid fa-code"></i>
-							</div>
-							<div class="identity-details">
-								<p class="identity-title">The Developer</p>
-								<p class="identity-level"><span class="level">Level 3</span> · <span
-										class="level-identity">Novice</span></p>
-							</div>
-							<i class="fa-solid fa-chevron-right identity-arrow"></i>
-						</div>
-						<div class="identity-progress">
-							<div class="identity-progress-bar"><span style="width: 53%;"></span></div>
-							<p class="identity-count">320 / 600 XP</p>
-						</div>
-						<div class="identity-vote">
-							<i class="fa-regular fa-circle-check"></i>
-							<p><span class="vote-count">23</span> votes cast</p>
-						</div>
-					</div>
+          <div class="identity developer">
+            <div class="identity-head">
+              <div class="identity-logo">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <div class="identity-details">
+                <p class="identity-title">The Developer</p>
+                <p class="identity-level"><span class="level">Level 3</span> · <span
+                    class="level-identity">Novice</span></p>
+              </div>
+              <i class="fa-solid fa-chevron-right identity-arrow"></i>
+            </div>
+            <div class="identity-progress">
+              <div class="identity-progress-bar"><span style="width: 53%;"></span></div>
+              <p class="identity-count">320 / 600 XP</p>
+            </div>
+            <div class="identity-vote">
+              <i class="fa-regular fa-circle-check"></i>
+              <p><span class="vote-count">23</span> votes cast</p>
+            </div>
+          </div>
 
-					<div class="identity scholar">
-						<div class="identity-head">
-							<div class="identity-logo">
-								<i class="fa-solid fa-book"></i>
-							</div>
-							<div class="identity-details">
-								<p class="identity-title">The Scholar</p>
-								<p class="identity-level"><span class="level">Level 2</span> · <span
-										class="level-identity">Novice</span></p>
-							</div>
-							<i class="fa-solid fa-chevron-right identity-arrow"></i>
-						</div>
-						<div class="identity-progress">
-							<div class="identity-progress-bar"><span style="width: 45%;"></span></div>
-							<p class="identity-count">180 / 400 XP</p>
-						</div>
-						<div class="identity-vote">
-							<i class="fa-regular fa-circle-check"></i>
-							<p><span class="vote-count">12</span> votes cast</p>
-						</div>
-					</div>
+          <div class="identity scholar">
+            <div class="identity-head">
+              <div class="identity-logo">
+                <i class="fa-solid fa-book"></i>
+              </div>
+              <div class="identity-details">
+                <p class="identity-title">The Scholar</p>
+                <p class="identity-level"><span class="level">Level 2</span> · <span
+                    class="level-identity">Novice</span></p>
+              </div>
+              <i class="fa-solid fa-chevron-right identity-arrow"></i>
+            </div>
+            <div class="identity-progress">
+              <div class="identity-progress-bar"><span style="width: 45%;"></span></div>
+              <p class="identity-count">180 / 400 XP</p>
+            </div>
+            <div class="identity-vote">
+              <i class="fa-regular fa-circle-check"></i>
+              <p><span class="vote-count">12</span> votes cast</p>
+            </div>
+          </div>
 
-					<button class="identity add-identity">
-						<i class="fa-solid fa-plus add-icon"></i>
-						<p>Add Identity</p>
-					</button>
-				</div>
-			</section>
+          <button class="identity add-identity">
+            <i class="fa-solid fa-plus add-icon"></i>
+            <p>Add Identity</p>
+          </button>
+        </div>
+      </section>
 
-			<section class="dashboard-grid">
-				<div class="dashboard-left">
+      <section class="dashboard-grid">
+        <div class="dashboard-left">
 
-					<section class="panel habits-panel">
-						<div class="panel-head">
-							<p class="panel-title">TODAY'S HABITS</p>
-						</div>
+          <section class="panel habits-panel">
+            <div class="panel-head">
+              <p class="panel-title">TODAY'S HABITS</p>
+            </div>
 
-						<div class="habits-toolbar">
-							<div class="habit-filters">
-								<button class="chip active">All <span class="chip-count">5</span></button>
-								<button class="chip athlete">The Athlete <span class="chip-count">2</span></button>
-								<button class="chip developer">The Developer <span class="chip-count">2</span></button>
-								<button class="chip scholar">The Scholar <span class="chip-count">1</span></button>
-							</div>
-							<div class="habit-tools">
-								<button class="tool-btn"><i class="fa-solid fa-filter"></i> Filter</button>
-								<button class="tool-btn"><i class="fa-solid fa-arrow-up-wide-short"></i> Sort</button>
-							</div>
-						</div>
+            <div class="habits-toolbar">
+              <div class="habit-filters">
+                <button class="chip active">All <span class="chip-count">5</span></button>
+                <button class="chip athlete">The Athlete <span class="chip-count">2</span></button>
+                <button class="chip developer">The Developer <span class="chip-count">2</span></button>
+                <button class="chip scholar">The Scholar <span class="chip-count">1</span></button>
+              </div>
+              <div class="habit-tools">
+                <button class="tool-btn"><i class="fa-solid fa-filter"></i> Filter</button>
+                <button class="tool-btn"><i class="fa-solid fa-arrow-up-wide-short"></i> Sort</button>
+              </div>
+            </div>
 
-						<div class="habit-table">
-							<div class="habit-row habit-row-head">
-								<span></span>
-								<span>HABIT</span>
-								<span>IDENTITY</span>
-								<span>STREAK</span>
-								<span>XP &amp; VOTE</span>
-								<span></span>
-							</div>
+            <div class="habit-table">
+              <div class="habit-row habit-row-head">
+                <span></span>
+                <span>HABIT</span>
+                <span>IDENTITY</span>
+                <span>STREAK</span>
+                <span>XP &amp; VOTE</span>
+                <span></span>
+              </div>
 
-							<div class="habit-row done">
-								<button class="habit-check"><i class="fa-solid fa-check"></i></button>
-								<div class="habit-info">
-									<p class="habit-name">Code for 30 mins</p>
-									<p class="habit-cue">After I have my morning coffee • In my room</p>
-								</div>
-								<span class="tag developer">The Developer</span>
-								<p class="habit-streak">🔥 7 days</p>
-								<div class="habit-xp">
-									<p class="xp">+20 XP</p>
-									<p class="vote">+1 vote</p>
-								</div>
-								<button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-							</div>
+              <div class="habit-row done">
+                <button class="habit-check"><i class="fa-solid fa-check"></i></button>
+                <div class="habit-info">
+                  <p class="habit-name">Code for 30 mins</p>
+                  <p class="habit-cue">After I have my morning coffee • In my room</p>
+                </div>
+                <span class="tag developer">The Developer</span>
+                <p class="habit-streak">🔥 7 days</p>
+                <div class="habit-xp">
+                  <p class="xp">+20 XP</p>
+                  <p class="vote">+1 vote</p>
+                </div>
+                <button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
 
-							<div class="habit-row">
-								<button class="habit-check"></button>
-								<div class="habit-info">
-									<p class="habit-name">Workout for 45 mins</p>
-									<p class="habit-cue">After I take a shower • In the gym</p>
-								</div>
-								<span class="tag athlete">The Athlete</span>
-								<p class="habit-streak">🔥 3 days</p>
-								<div class="habit-xp">
-									<p class="xp">+25 XP</p>
-									<p class="vote">+1 vote</p>
-								</div>
-								<button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-							</div>
+              <div class="habit-row">
+                <button class="habit-check"></button>
+                <div class="habit-info">
+                  <p class="habit-name">Workout for 45 mins</p>
+                  <p class="habit-cue">After I take a shower • In the gym</p>
+                </div>
+                <span class="tag athlete">The Athlete</span>
+                <p class="habit-streak">🔥 3 days</p>
+                <div class="habit-xp">
+                  <p class="xp">+25 XP</p>
+                  <p class="vote">+1 vote</p>
+                </div>
+                <button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
 
-							<div class="habit-row done">
-								<button class="habit-check"><i class="fa-solid fa-check"></i></button>
-								<div class="habit-info">
-									<p class="habit-name">Read 10 pages</p>
-									<p class="habit-cue">Before I sleep • In my bedroom</p>
-								</div>
-								<span class="tag scholar">The Scholar</span>
-								<p class="habit-streak">🔥 5 days</p>
-								<div class="habit-xp">
-									<p class="xp">+15 XP</p>
-									<p class="vote">+1 vote</p>
-								</div>
-								<button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-							</div>
+              <div class="habit-row done">
+                <button class="habit-check"><i class="fa-solid fa-check"></i></button>
+                <div class="habit-info">
+                  <p class="habit-name">Read 10 pages</p>
+                  <p class="habit-cue">Before I sleep • In my bedroom</p>
+                </div>
+                <span class="tag scholar">The Scholar</span>
+                <p class="habit-streak">🔥 5 days</p>
+                <div class="habit-xp">
+                  <p class="xp">+15 XP</p>
+                  <p class="vote">+1 vote</p>
+                </div>
+                <button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
 
-							<div class="habit-row">
-								<button class="habit-check"></button>
-								<div class="habit-info">
-									<p class="habit-name">Drink 3L of water</p>
-									<p class="habit-cue">Throughout the day</p>
-								</div>
-								<span class="tag athlete">The Athlete</span>
-								<p class="habit-streak">🔥 2 days</p>
-								<div class="habit-xp">
-									<p class="xp">+10 XP</p>
-									<p class="vote">+1 vote</p>
-								</div>
-								<button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-							</div>
+              <div class="habit-row">
+                <button class="habit-check"></button>
+                <div class="habit-info">
+                  <p class="habit-name">Drink 3L of water</p>
+                  <p class="habit-cue">Throughout the day</p>
+                </div>
+                <span class="tag athlete">The Athlete</span>
+                <p class="habit-streak">🔥 2 days</p>
+                <div class="habit-xp">
+                  <p class="xp">+10 XP</p>
+                  <p class="vote">+1 vote</p>
+                </div>
+                <button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
 
-							<div class="habit-row done">
-								<button class="habit-check"><i class="fa-solid fa-check"></i></button>
-								<div class="habit-info">
-									<p class="habit-name">Meditate for 10 mins</p>
-									<p class="habit-cue">After dinner • In my room</p>
-								</div>
-								<span class="tag developer">The Developer</span>
-								<p class="habit-streak">🔥 8 days</p>
-								<div class="habit-xp">
-									<p class="xp">+10 XP</p>
-									<p class="vote">+1 vote</p>
-								</div>
-								<button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-							</div>
-						</div>
+              <div class="habit-row done">
+                <button class="habit-check"><i class="fa-solid fa-check"></i></button>
+                <div class="habit-info">
+                  <p class="habit-name">Meditate for 10 mins</p>
+                  <p class="habit-cue">After dinner • In my room</p>
+                </div>
+                <span class="tag developer">The Developer</span>
+                <p class="habit-streak">🔥 8 days</p>
+                <div class="habit-xp">
+                  <p class="xp">+10 XP</p>
+                  <p class="vote">+1 vote</p>
+                </div>
+                <button class="habit-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              </div>
+            </div>
 
-						<button class="add-habit-btn">
-							<i class="fa-solid fa-plus"></i>
-							<p>Add Habit (Use the 4 Laws)</p>
-						</button>
-					</section>
+            <button class="add-habit-btn">
+              <i class="fa-solid fa-plus"></i>
+              <p>Add Habit (Use the 4 Laws)</p>
+            </button>
+          </section>
 
-					<section class="panel laws-panel">
-						<p class="panel-title">THE 4 LAWS OF BEHAVIOR CHANGE</p>
-						<div class="laws">
-							<a class="law law-1" href="https://jamesclear.com/atomic-habits/cheatsheet">
-								<div class="law-head">
-									<span class="law-icon"><i class="fa-regular fa-eye"></i></span>
-									<p class="law-title">Make It Obvious</p>
-								</div>
-								<p class="law-text">Plan when and where your habit will happen.</p>
-								<p class="law-action">Add cue &amp; location</p>
-							</a>
-							<i class="fa-solid fa-arrow-right law-arrow"></i>
+          <section class="panel laws-panel">
+            <p class="panel-title">THE 4 LAWS OF BEHAVIOR CHANGE</p>
+            <div class="laws">
+              <a class="law law-1" href="https://jamesclear.com/atomic-habits/cheatsheet">
+                <div class="law-head">
+                  <span class="law-icon"><i class="fa-regular fa-eye"></i></span>
+                  <p class="law-title">Make It Obvious</p>
+                </div>
+                <p class="law-text">Plan when and where your habit will happen.</p>
+                <p class="law-action">Add cue &amp; location</p>
+              </a>
+              <i class="fa-solid fa-arrow-right law-arrow"></i>
 
-							<a class="law law-2" href="https://jamesclear.com/atomic-habits/cheatsheet">
-								<div class="law-head">
-									<span class="law-icon"><i class="fa-solid fa-heart"></i></span>
-									<p class="law-title">Make It Attractive</p>
-								</div>
-								<p class="law-text">Pair it with something you enjoy.</p>
-								<p class="law-action">Add temptation bundle</p>
-							</a>
-							<i class="fa-solid fa-arrow-right law-arrow"></i>
+              <a class="law law-2" href="https://jamesclear.com/atomic-habits/cheatsheet">
+                <div class="law-head">
+                  <span class="law-icon"><i class="fa-solid fa-heart"></i></span>
+                  <p class="law-title">Make It Attractive</p>
+                </div>
+                <p class="law-text">Pair it with something you enjoy.</p>
+                <p class="law-action">Add temptation bundle</p>
+              </a>
+              <i class="fa-solid fa-arrow-right law-arrow"></i>
 
-							<a class="law law-3" href="https://jamesclear.com/atomic-habits/cheatsheet">
-								<div class="law-head">
-									<span class="law-icon"><i class="fa-solid fa-bolt"></i></span>
-									<p class="law-title">Make It Easy</p>
-								</div>
-								<p class="law-text">Start small. Make it so easy you can't say no.</p>
-								<p class="law-action">Apply 2-Minute Rule</p>
-							</a>
-							<i class="fa-solid fa-arrow-right law-arrow"></i>
+              <a class="law law-3" href="https://jamesclear.com/atomic-habits/cheatsheet">
+                <div class="law-head">
+                  <span class="law-icon"><i class="fa-solid fa-bolt"></i></span>
+                  <p class="law-title">Make It Easy</p>
+                </div>
+                <p class="law-text">Start small. Make it so easy you can't say no.</p>
+                <p class="law-action">Apply 2-Minute Rule</p>
+              </a>
+              <i class="fa-solid fa-arrow-right law-arrow"></i>
 
-							<a class="law law-4" href="https://jamesclear.com/atomic-habits/cheatsheet">
-								<div class="law-head">
-									<span class="law-icon"><i class="fa-solid fa-star"></i></span>
-									<p class="law-title">Make It Satisfying</p>
-								</div>
-								<p class="law-text">Track it. Get feedback. Feel the progress.</p>
-								<p class="law-action">Earn XP &amp; build streaks</p>
-							</a>
-						</div>
-					</section>
-					<dialog class="habit-modal">
-						<form method="dialog" class="habit-form">
+              <a class="law law-4" href="https://jamesclear.com/atomic-habits/cheatsheet">
+                <div class="law-head">
+                  <span class="law-icon"><i class="fa-solid fa-star"></i></span>
+                  <p class="law-title">Make It Satisfying</p>
+                </div>
+                <p class="law-text">Track it. Get feedback. Feel the progress.</p>
+                <p class="law-action">Earn XP &amp; build streaks</p>
+              </a>
+            </div>
+          </section>
+          <dialog class="habit-modal">
+            <form method="dialog" class="habit-form">
 
-							<!-- Step 1 -->
-							<div class="habit-step" data-step="1">
-								<p class="modal-title">Who are you becoming?</p>
-								<div class="identity-picker"></div>
-							</div>
+              <div class="habit-step" data-step="1">
+                <p class="modal-title">Who are you becoming?</p>
+                <div class="identity-picker"></div>
+              </div>
 
-							<!-- Step 2 -->
-							<div class="habit-step" data-step="2" hidden>
-								<p class="modal-title">What small action proves it?</p>
-								<p class="modal-subtitle">
-									<span class="picked-identity"></span>
-								</p>
+              <div class="habit-step" data-step="2" hidden>
+                <p class="modal-title">What small action proves it?</p>
+                <p class="modal-subtitle">
+                  <span class="picked-identity"></span>
+                </p>
 
-								<label>Habit <input type="text" name="name" placeholder="Code for 20 minutes"
-										required></label>
-								<label>Cue — after / when <input type="text" name="cue" placeholder="Dinner"
-										required></label>
-								<label>Where <input type="text" name="location" placeholder="In my room"></label>
+                <label>Habit <input type="text" name="name" placeholder="Code for 20 minutes" required></label>
+                <label>Cue — after / when <input type="text" name="cue" placeholder="Dinner" required></label>
+                <label>Where <input type="text" name="location" placeholder="In my room"></label>
 
-								<div class="habit-form-row">
-									<label>XP <input type="number" name="xp" value="10" min="1" max="100"
-											required></label>
-									<label>Vote <input type="number" name="vote" value="1" min="1" max="5"
-											required></label>
-								</div>
+                <div class="habit-form-row">
+                  <label>XP <input type="number" name="xp" value="10" min="1" max="100" required></label>
+                  <label>Vote <input type="number" name="vote" value="1" min="1" max="5" required></label>
+                </div>
 
-								<div class="modal-actions">
-									<button type="button" class="back-btn">Back</button>
-									<button type="submit" class="save-btn">Create Habit</button>
-								</div>
-							</div>
-
-						</form>
-					</dialog>
-				</div>
-			</section>
-		</main>
-	</div>
-	<!-- <script src="./script.js"></script> -->
+                <div class="modal-actions">
+                  <button type="button" class="back-btn">Back</button>
+                  <button type="submit" class="save-btn">Create Habit</button>
+                </div>
+              </div>
+            </form>
+          </dialog>
+          <dialog class="identity-modal">
+            <form method="dialog" class="identity-form">
+              <p class="modal-title">New Identity</p>
+              <label>Name <input type="text" name="name" placeholder="The Writer" required></label>
+              <label>Icon <select name="icon">
+                  <option value="fa-pen">Pen</option>
+                  <option value="fa-dumbbell">Dumbbell</option>
+                  <option value="fa-palette">Palette</option>
+                  <option value="fa-code">Code</option>
+                  <option value="fa-book">Book</option>
+                </select>
+              </label>
+              <label>Color <input type="color" name="color" value="#f0883e"></label>
+              <div class="modal-actions">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="save-btn">Create</button>
+              </div>
+            </form>
+          </dialog>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="./script.js"></script>
 </body>
 
 </html>

@@ -28,8 +28,8 @@
 }
 
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -507,24 +507,10 @@ main {
   color: var(--identity-color);
 }
 
-.identity.athlete {
-  --identity-color: var(--accent-fitness);
-  --identity-soft: rgba(0, 217, 155, .12);
-  --identity-border: rgba(82, 143, 126, 0.3);
+.identity {
+  --identity-soft: color-mix(in srgb, var(--identity-color) 12%, transparent);
+  --identity-border: color-mix(in srgb, var(--identity-color) 30%, var(--bg-primary));
 }
-
-.identity.developer {
-  --identity-color: var(--accent-developer);
-  --identity-soft: rgba(79, 140, 255, .12);
-  --identity-border: rgba(79, 140, 255, .3);
-}
-
-.identity.scholar {
-  --identity-color: var(--accent-scholar);
-  --identity-soft: rgba(155, 108, 255, .12);
-  --identity-border: rgba(155, 108, 255, .3);
-}
-
 .identity-head {
   display: flex;
   align-items: center;
@@ -750,9 +736,9 @@ main {
 }
 
 .chip.active {
-  color: var(--accent);
+  color: var(--text-main);
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .chip.athlete {
@@ -1015,7 +1001,7 @@ main {
   font-size: 11px;
 }
 
-/* ===== Responsive ===== */
+/*Responsive*/
 @media (max-width: 1100px) {
   .laws {
     grid-template-columns: 1fr 1fr;
@@ -1165,4 +1151,114 @@ main {
   background: var(--accent);
   border: 1px solid var(--accent);
   color: #fff;
+}
+
+/* Add identity modal */
+.identity-modal {
+  border: 1px solid var(--border);
+  margin: auto;
+  border-radius: .65rem;
+  background: var(--bg-card);
+  color: var(--text-main);
+  padding: 1.2rem;
+  width: min(22rem, 90vw);
+}
+
+.identity-modal::backdrop {
+  background: rgba(0, 0, 0, .6);
+}
+
+.identity-form {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+
+.identity-form label {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.identity-form input[type="text"],
+.identity-form select {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: .4rem;
+  padding: .5rem .6rem;
+  color: var(--text-main);
+  font: inherit;
+}
+
+.identity-form input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.identity-form input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.identity-form input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.cancel-btn {
+  padding: .45rem .9rem;
+  border-radius: .4rem;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.row-menu {
+  position: absolute;
+  z-index: 50;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: .4rem;
+  padding: .3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+  min-width: 8rem;
+}
+
+.row-menu-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+  padding: .4rem .6rem;
+  font: inherit;
+  font-size: 12px;
+  background: transparent;
+  border: 0;
+  border-radius: .3rem;
+  color: var(--text-main);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.row-menu-item:hover {
+  background: rgba(255, 255, 255, .06);
+}
+
+.row-menu-item.delete {
+  color: var(--danger);
+}
+
+.row-menu-item.delete:hover {
+  background: rgba(248, 81, 73, .1);
 }
