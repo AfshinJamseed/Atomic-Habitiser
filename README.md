@@ -1,40 +1,28 @@
-<p align="center"><a href="https://afshinjamseed.github.io/Atomic-Habitiser/"><img width="1000" height="929" alt="image" src="https://github.com/user-attachments/assets/c6f9a602-5b5f-4288-8eac-a44a67aa1d0f" />
-</a><p>
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d4b26b3a-6b43-4f39-9b1e-e010e0cc5a80" />
 
 # Atomic Habitizer
 [Visit Site](https://afshinjamseed.github.io/Atomic-Habitiser/)
 
 ## 🎯 Features
 
-- ### 📅 Weekly Habit Tracker
-  - View habits across the current week.
-  - Mark completed days with a single click.
-  - Upcoming dates are locked automatically.
-  - <p align-items="center"><video autoplay muted src="https://github.com/user-attachments/assets/dcecd988-da90-4851-aa6f-25a11fa0d668"></video></p>
-
-- ### ⚡ Habit Streaks
-  - Tracks the current streak for each habit _(this was hard)_
-  - Streaks are calculated from the habits complete history
-  - They are updated even when an habit is removed
-- ### 🚀 Max Streaks
-  - Shows the longest current streak acros all habits
-  - Automatically updates when an habit is toggled
-- ### 🪐 Dynamic Progress Rings
-  - Shows todays completion percentage visually _(this was hard too)_
-  - Automatic updation
-- ### 👨‍💼 Habit Management
-  - Create new habits
-  - Edit habit names and categories
-  - Comfirmation for deleting habits
-  - Quick presets for common habits
-- ### 🧮 Categories
-  - Fitness
-  - Mind
-  - Productivity
-  - _custom categories will come in newer versions_
+- ### 👤 Identity-Based Tracker
+  - Level & XP progress: Track identities like "The Athlete","The Developer","The Scholar".
+  - Cast Votes for Yourself: Every completed habit adds votes toward reinforcing your chosen identities
+  - Custom Identity Creation: Build custom identities with personalized Colors(you can only choose light colors only top right of 50% of color pallate) and Icons.
+- ### ⚡ Habit Managements & Behavioral Laws
+  - The 4 Laws Integration: Create habits tied to specific cues, locations, XP values and vote counts
+  - Streak Tracking: Keep track of active daily streaks across all your active habits.
+  - Filter Habits by identity.
+  - Quick Habit Completion: Mark habts done in real-time updates
+- ### 📈 Dynamic Stats & Dashboard
+  - Progress Ring: Real-time visual progress of daily completed habits.
+  - Top Stats Bar: Quick-glance counters for best streak, completion rate, and total xp.
+  - James Clear Cheatsheet Integration: Quick reference links for the 4 Laws(Click any of the law card to check it out)
+- ### 🪐 Data Management & Navigation
+  - Export & Import Data: Full backup functionality to export or restore habits and identities as JSON files
+  - Data Reset Option: Option to wipe local storage and reset all tracked progress.
 - ### 🧺 Local Storage
   - Basic in-built browser storage
-  - _update in newer versions_
 - ### 🎨 Modern UI
   - Dark dashboards
   - Glassmorphism
@@ -60,6 +48,8 @@ atomic-habitizer/
 ├── style.css
 ├── script.js
 |
+├── package.json
+├── package-lock.json
 └── README.md
 ```
 
@@ -69,12 +59,12 @@ atomic-habitizer/
 - Weekly completion statistics
 - Habit completion charts
 - Habit reminders
-- Custom habit colors
+- ~~Custom habit colors~~
 - Dark/light themes
 - Cloud synchronization
 - User accounts
 - Mobile/PWA support
-- Export/import habit data
+- ~~Export/import habit data~~
 - More detailed analytics
 
 #### keep your days diciplined...
