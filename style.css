@@ -1120,6 +1120,9 @@ main {
   .laws {
     grid-template-columns: 1fr;
   }
+  .stats-grid {
+    display: none;
+  }
 }
 
 /* Add habit modal */
