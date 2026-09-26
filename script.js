@@ -348,6 +348,12 @@ function resetDailyCompletion() {
 
   if (changed) save();
 }
+function cleanOrphanedHabits() {
+  const before = habits.length;
+  habits = habits.filter(h => h.identityId && identities.some(i => i.id === h.identityId));
+  if (habits.length !== before) save();
+}
+cleanOrphanedHabits();
 document.querySelector(".habit-table").addEventListener('click', (e) => {
   const checkBtn = e.target.closest(".habit-check");
   const moreBtn = e.target.closest(".habit-more");
