@@ -9,15 +9,12 @@
   --text-muted: #8b949e;
   --text-faint: #636d78;
 
-  /* the only interactive accent */
-  --accent: #7c5cff;
+  --accent: white;
 
-  /* identity hues — the only meaningful color */
   --accent-fitness: #00d99b;
   --accent-developer: #4f8cff;
   --accent-scholar: #9b6cff;
 
-  /* kept as aliases so old rules don't break */
   --accent-mind: var(--accent-developer);
   --accent-productivity: var(--text-muted);
 
@@ -138,7 +135,7 @@ p {
 }
 
 .sidebar-toggle:hover {
-  color: var(--text-main);
+  color: black;
   border-color: var(--accent);
   background: var(--accent);
 }
@@ -543,23 +540,26 @@ main {
   padding-bottom: 7px;
 }
 
-.identities::-webkit-scrollbar {
-  width: 15px;
+::-webkit-scrollbar {
+  width: 2px;
   height: 7px;
 }
 
-.identities::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   margin-top: 15px;
   width: 50%;
   background: var(--bg-card);
   border-radius: 50px;
 }
 
-.identities::-webkit-scrollbar-thumb {
-  background: linear-gradient(to right,
+::-webkit-scrollbar-thumb {
+  /* background: linear-gradient(to right,
       var(--bg-card),
       var(--text-main),
-      var(--bg-card));
+      var(--bg-card)); */
+  background: color-mix(in srgb, var(--accent) 75%,
+      transparent);
+  backdrop-filter: blur(5px);
   border-radius: 16px;
   cursor: grab;
   transition: all 0.15s ease;
@@ -723,6 +723,7 @@ main {
   justify-content: center;
   gap: .5rem;
   border: 1px dashed rgba(255, 255, 255, .15);
+  min-width: 200px;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
@@ -944,7 +945,7 @@ main {
 }
 
 .habit-row.done .habit-check {
-  color: #fff;
+  color: var(--bg-primary);
   background: var(--accent);
   border-color: var(--accent);
 }
@@ -1030,6 +1031,8 @@ main {
 .laws {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  max-width: 200px;
   gap: .5rem;
 }
 
@@ -1041,6 +1044,7 @@ main {
   gap: .45rem;
   height: 100%;
   padding: .75rem .8rem;
+  flex: 1 1 180px;
   border: 1px solid rgba(255, 255, 255, .08);
   border-radius: .55rem;
   background: rgba(255, 255, 255, .02);
@@ -1097,7 +1101,8 @@ main {
 /*Responsive*/
 @media (max-width: 1100px) {
   .laws {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .law-arrow {
@@ -1105,7 +1110,7 @@ main {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 800px) {
   .habit-row {
     grid-template-columns: 2rem 1fr 3.5rem;
   }
@@ -1120,6 +1125,7 @@ main {
   .laws {
     grid-template-columns: 1fr;
   }
+
   .stats-grid {
     display: none;
   }
@@ -1142,8 +1148,7 @@ main {
 
 .habit-modal,
 .identity-modal {
-  position: relative;
-  /* anchors the close button */
+  position: fixed;
 }
 
 .modal-close {
@@ -1263,6 +1268,7 @@ main {
   font: inherit;
   font-size: 12.5px;
   cursor: pointer;
+  transition: all .15s ease;
 }
 
 .back-btn {
@@ -1272,9 +1278,16 @@ main {
 }
 
 .save-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.save-btn:hover,
+.cancel-btn:hover,
+.back-btn:hover {
   background: var(--accent);
-  border: 1px solid var(--accent);
-  color: #fff;
+  color: black;
 }
 
 /* Add identity modal */
@@ -1282,14 +1295,16 @@ main {
   border: 1px solid var(--border);
   margin: auto;
   border-radius: .65rem;
-  background: var(--bg-card);
+  background: color-mix(in srgb, var(--bg-card) 75%, transparent);
   color: var(--text-main);
   padding: 1.2rem;
+  height: max-content;
   width: min(22rem, 90vw);
 }
 
 .identity-modal::backdrop {
-  background: rgba(0, 0, 0, .6);
+  backdrop-filter: blur(5px);
+  background: color-mix(in srgb, var(--bg-card) 25%, transparent);
 }
 
 .identity-form {
@@ -1306,8 +1321,7 @@ main {
   color: var(--text-muted);
 }
 
-.identity-form input[type="text"],
-.identity-form select {
+.identity-form input[type="text"] {
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: .4rem;
@@ -1324,8 +1338,66 @@ main {
   border: 1px solid var(--border);
   border-radius: 50%;
   padding: 0;
-  background: none;
+  background: white;
   cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-trigg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-surface);
+  cursor: pointer;
+  border-left: 1px solid var(--accent);
+}
+
+.dropdown-options {
+  display: none;
+  background: color-mix(in srgb, var(--bg-surface) 50%, transparent);
+  backdrop-filter: blur(7px);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  z-index: 100;
+  max-height: 130px;
+  overflow-y: scroll;
+}
+
+.dropdown.active .dropdown-options {
+  display: block;
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dropdown-option:hover {
+  border-left: 1px solid var(--accent);
+}
+.dropdown i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #000;
+  border-radius: 5px;
 }
 
 .identity-form input[type="color"]::-webkit-color-swatch-wrapper {
